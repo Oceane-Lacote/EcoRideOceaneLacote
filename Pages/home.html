@@ -1,3 +1,133 @@
+<style>
+/* Conteneur principal */
+.container-covoit {
+    display: flex; /* Aligne les sections côte à côte */
+    justify-content: center; /* Centre les sections horizontalement */
+    align-items: center; /* Centre verticalement les sections */
+    gap: 0px; /* Espacement entre les sections */
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 20px;
+    margin: 0 auto; /* Centre horizontalement sur la page */
+}
+
+/* Sections gauche et droite */
+.section {
+    flex: 1; /* Les sections prennent un espace égal */
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Section gauche */
+.section-left {
+    background-color: #267AA7; /* Couleur de fond bleue */
+    color: white;
+    border-radius: 10px;
+}
+
+.section-left h2 {
+    margin-bottom: 20px;
+}
+
+.section-left label {
+    display: block;
+    margin: 10px 0 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.section-left input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.section-left .btn {
+    background-color: #FCB941; /* Couleur du bouton */
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.section-left .btn:hover {
+    background-color: #e69500;
+}
+
+/* Section droite */
+.section-right {
+    background-color: #7F6751; /* Couleur de fond marron */
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.section-right h2 {
+    margin-bottom: 20px;
+}
+
+.section-right .btn {
+    background-color: #FCB941;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.section-right .btn:hover {
+    background-color: #e69500;
+}
+
+/* Formulaire et image dans la section gauche */
+.form-and-image {
+    display: flex;
+    align-items: flex-start; /* Aligne le haut du formulaire avec l'image */
+    gap: 20px; /* Espacement entre le formulaire et l'image */
+}
+
+/* Conteneur de l'image */
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-image {
+    max-width: 80%; /* L'image occupe tout l'espace disponible */
+    height: auto;
+    border-radius: 10px; /* Coins arrondis */
+}
+
+/* Diviseur circulaire */
+.divider-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+    border-radius: 50%; /* Cercle parfait */
+    z-index: 1;
+    margin: 0 -25px;
+    line-height: 1;
+
+}
+</style>
 
 <div class="hero-scene text-center text-white">
     <div class="hero-scene-content">
@@ -6,4 +136,79 @@
     </div>
 </div>
 
-<button class="btn btn-primary">Coucou</button>
+<section>
+    <article>
+        <div class="container-covoit">
+            <!-- Section gauche -->
+            <div class="section section-left">
+                <h2>Vous recherchez un covoiturage</h2>
+                <div class="form-and-image">
+                    <form>
+                        <label for="depart">Départ *</label>
+                        <input type="text" id="depart" placeholder="Ville ou code postal">
+                        
+                        <label for="arrivee">Arrivée *</label>
+                        <input type="text" id="arrivee" placeholder="Ville ou code postal">
+                        
+                        <label for="date">Date</label>
+                        <input type="date" id="date" value="2025-03-23">
+                        
+                        <button type="submit" class="btn">Rechercher</button>
+                    </form>
+                    <div class="image-container">
+                        <img src="../Ressources/rechercher.png" alt="Rechercher Covoiturage" class="form-image">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Diviseur circulaire -->
+            <div class="divider-circle">
+                <span>ou</span>
+            </div>
+            
+            <!-- Section droite -->
+            <div class="section section-right">
+                <h2>Vous proposez un covoiturage</h2>
+                <div class="image-container">
+                    <img src="../Ressources/proposer.png" alt="Proposer Covoiturage" class="form-image">
+                </div>
+                <button class="btn">Proposer</button>
+            </div>
+        </div>
+    </article>
+
+    <article>
+        <div class="container p-4">
+          <div class="row row-cols-2 align-items-center">
+            <div class="col">
+                <p class="text-justify">
+                    Réduisez votre impact environnemental tout en facilitant vos déplacements grâce à notre solution de covoiturage écologique.🌍 </p>
+            </div>
+         <div class="col">
+            <img class="w-50 rounded" src="../Ressources/home1.png">
+            <img/>
+        </div>
+    </div>
+</article>
+
+<article class="bg-secondary text-white">
+    <div class="container p-4">
+      <div class="row row-cols-2 align-items-center">
+        <div class="col">
+            <img class="w-50 rounded" src="../Ressources/home 2.png"><img/>
+            </div>
+        <div class="col">
+            <p class="text-justify">
+                Adoptez le covoiturage responsable dès aujourd’hui, et obtenez 20 crédits offerts pour votre premier voyage ✨ 
+            </p>
+            <div class="text-center pt-5 ">
+                <button class="btn">S'inscrire</button>
+            </div>
+        </div>
+    </div>
+        
+</article>
+</section>
+
+
+

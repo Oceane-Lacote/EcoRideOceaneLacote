@@ -24,6 +24,7 @@ p{
 
  .hero-scene{
     position: relative;
+    margin-bottom: 15px;
     &::before{
         content:"";
         position: absolute;
@@ -47,4 +48,8 @@ p{
     justify-content: center;
 
  }
+}
+
+.text-justify{
+    text-align: justify;
 }
