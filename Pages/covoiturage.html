@@ -1,0 +1,495 @@
+<style>
+    /* Style général pour la barre de recherche */
+    .search-bar {
+      background-color: #fff; /* Fond blanc */
+      padding: 20px 0;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .search-container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 20px;
+    }
+    
+    /* Conteneur de tous les champs, avec coins arrondis et fond gris clair */
+    .search-fields-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px;
+      background-color: #267aa7; /* Fond clair */
+      border-radius: 30px; /* Coins arrondis */
+    }
+    
+    /* Style pour les champs de texte et le bouton */
+    .search-fields-container input {
+      padding: 12px;
+      font-size: 18px; /* Texte plus grand */
+      border-radius: 20px; /* Coins arrondis pour les champs */
+      border: 1px solid #267aa7;
+      width: 23%; /* Chaque champ occupe 1/4 de la largeur */
+      margin-right: 10px; /* Espacement entre les champs */
+      outline: none;
+      background-color: #267aa7; /* Fond très clair pour les champs de saisie */
+      color: white; /* Texte des champs en blanc */
+    }
+    
+    /* Couleur et style du placeholder */
+    .search-fields-container input::placeholder {
+      color: white; /* Placeholder en blanc */
+      font-size: 16px; /* Taille du texte du placeholder */
+      font-weight: 300; /* Légèrement plus fin */
+    }
+    
+    .search-fields-container input:last-child {
+      margin-right: 0; /* Enlever l'espacement à droite du dernier champ */
+    }
+    
+    /* Style du bouton de recherche */
+    .btn-search {
+      background-color: #FCB941; /* Couleur du bouton */
+      color: white;
+      padding: 12px 20px;
+      font-size: 18px; /* Texte plus grand */
+      border: none;
+      border-radius: 20px; /* Coins arrondis pour le bouton */
+      cursor: pointer;
+      width: 20%; /* Le bouton prend 20% de la largeur */
+    }
+    
+    .btn-search:hover {
+      background-color: #e69500; /* Couleur du bouton au survol */
+    }
+
+      /* Suggestions de villes */
+  .suggestions {
+    position: absolute;
+    top: 100%; /* Juste en dessous du champ de recherche */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 150px; /* Limite la hauteur */
+    overflow-y: auto; /* Ajoute un défilement vertical */
+  }
+
+  .suggestions div {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .suggestions div:hover {
+    background-color: #fcb941;
+    color: white;
+
+  }
+/* Bouton pour afficher/masquer les filtres */
+.btn-filters {
+  background-color: #d9d9d9; /* Fond gris clair */
+  border: 1px solid #7f6751; /* Bordure noire */
+  color: #000;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 1700px;
+}
+
+/* Style général pour le conteneur des filtres */
+.filters {
+  display: none; /* Masquer les filtres par défaut */
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 20px; /* Ajouter de l'espace sous la barre de recherche */
+  background-color: #fff; /* Fond blanc */
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Modifier l'affichage des filtres lorsqu'ils sont visibles */
+.filters.show {
+  display: flex;
+}
+
+/* Le reste de tes styles existants pour les filtres */
+.filter-item {
+  background-color: #d9d9d9;
+  border: 1px solid #267aa7;
+  border-radius: 15px;
+  padding: 15px;
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Style des labels */
+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #267aa7; /* Texte bleu pour les labels */
+}
+
+/* Style des checkboxes */
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+/* Style du slider de durée */
+input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #267aa7; /* Fond bleu pour le slider */
+  height: 8px;
+  border-radius: 5px;
+  transition: background 0.2s ease; /* Animation pour le changement de couleur */
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #FCB941; /* Couleur jaune pour le bouton du slider */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #FCB941; /* Couleur jaune pour le bouton du slider */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#duration-value {
+  font-weight: bold;
+  color: #267aa7; /* Couleur bleue pour le texte du filtre de durée */
+}
+
+/* Pour le prix et son affichage */
+#price-value {
+  font-weight: bold;
+  color: #267aa7; /* Couleur bleue pour la valeur du prix */
+}
+
+/* Style pour les étoiles */
+.star-rating {
+  display: flex;
+  gap: 5px;
+}
+
+.star {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background: #e0e0e0; /* Étoiles vides (gris) */
+  border-radius: 50%; /* Arrondir les étoiles */
+}
+
+.star.filled {
+  background: gold; /* Couleur pour les étoiles pleines */
+}
+
+.star:hover {
+  opacity: 0.7; /* Effet au survol */
+}
+
+
+/* Style général pour le conteneur */
+.container {
+  background-color: #d9d9d9; /* Fond gris clair */
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+/* Conteneur de la photo et du nom du conducteur */
+.profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.profile-img {
+  width: 80px; /* Taille de la photo de profil */
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.driver-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.rating {
+  display: flex;
+  gap: 5px;
+  font-size: 22px; /* Étoiles plus grosses */
+  background-color: white; /* Fond blanc pour les étoiles */
+  padding: 2px 5px;
+  border-radius: 5px;
+}
+
+.star {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc; /* Couleur de l'étoile vide */
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); /* Forme d'étoile */
+}
+
+.star-filled {
+  background-color: rgb(157, 137, 24); /* Couleur de l'étoile pleine */
+}
+
+/* Préférences de voyage (étiquettes) */
+.preferences {
+  position: absolute;  /* Positionner les préférences de manière absolue */
+  bottom: 20px;        /* Espacement de 20px depuis le bas du conteneur */
+  left: 20px;          /* Espacement de 20px depuis la gauche du conteneur */
+  display: flex;
+  gap: 10px;           /* Espacement entre les étiquettes */
+  flex-wrap: wrap;     /* Les étiquettes se réorganisent si nécessaire */
+}
+
+.tag {
+  background-color: #267aa7; /* Fond bleu */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+/* Informations sur le prix et le bouton */
+.price-info {
+  display: flex;
+  flex-direction: column;  /* Empiler le prix et les sièges verticalement */
+  align-items: flex-end;   /* Aligner les éléments à droite */
+  position: absolute;      /* Positionnement absolu */
+  top: 30px;               /* 20px depuis le haut du conteneur */
+  right: 20px;             /* 20px depuis la droite du conteneur */
+}
+
+/* Prix */
+.price {
+  font-size: 55px;  /* Taille plus grande pour le prix */
+  font-weight: bold; /* Gras pour le prix */
+  margin-bottom: 10px; /* Espace sous le prix pour séparer avec les sièges */
+  margin-right: 80px;
+  color: #7f6751
+}
+
+/* Nombre de sièges disponibles */
+.seats-available {
+  font-size: 21px; /* Taille plus petite pour les sièges disponibles */
+  color: red; /* Rouge pour les sièges disponibles */
+  margin-bottom: 140px;
+  margin-right: 30px;
+  font-weight: bold;
+}
+
+/* Bouton "En savoir plus" */
+.learn-more-btn {
+  background-color: #FCB941; /* Bouton jaune */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 180px;
+  position: absolute;  /* Positionner le bouton de manière absolue */
+  bottom: 20px;        /* Espacement de 20px depuis le bas du conteneur */
+  right: 20px;         /* Espacement de 20px depuis la droite du conteneur */
+  margin-top: 100px;    /* Ajout d'un espacement au-dessus du bouton pour le descendre */
+}
+
+.learn-more-btn:hover {
+  background-color: #e69500; /* Changement de couleur au survol */
+}
+/* Détails du trajet */
+.trip-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trip-date {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.trip-timing {
+  display: flex;
+  justify-content: center; /* Centrer les colonnes */
+  gap: 150px; /* Réduire l'écart entre départ et arrivée */
+  width: 100%;
+}
+
+.departure, .arrival {
+  text-align: center;
+}
+
+.departure h1, .arrival h1 {
+  font-size: 36px; /* Heure plus grande */
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.departure p, .arrival p {
+  font-size: 16px;
+  margin: 5px 0;
+  margin-bottom: 80px;
+}
+    /* Responsive : Lorsque l'écran devient plus petit, les éléments se réorganisent */
+    @media (max-width: 768px) {
+      .search-fields-container {
+        flex-direction: column; /* Les éléments passent en colonne sur petits écrans */
+      }
+    
+      .search-fields-container input, .btn-search {
+        width: 100%; /* Chaque élément prend toute la largeur */
+        margin-bottom: 10px; /* Ajout d'espace entre les éléments */
+      }
+    }
+    </style>
+    
+    <section class="search-bar">
+        <div class="search-container">
+          <!-- Conteneur pour tous les champs de recherche -->
+          <div class="search-fields-container">
+            <!-- Ville de départ -->
+            <input type="text" id="depart" placeholder="Chamonix, France" required>
+            <div id="suggestions-depart" class="suggestions"></div>
+            
+            <!-- Ville d'arrivée -->
+            <input type="text" id="arrivee" placeholder="Paris, France" required>
+            <div id="suggestions-arrivee" class="suggestions-arrivee"></div>
+
+            <!-- Date de départ -->
+            <input type="date" id="date" required>
+            
+            <!-- Bouton de recherche -->
+            <button type="submit" class="btn-search">Rechercher</button>
+          </div>
+        </div>
+    </section>
+    <!-- Bouton pour afficher/masquer les filtres -->
+    <button class="btn-filters" onclick="toggleFilters()">Filtres</button>
+  </div>
+</section>
+
+<!-- Conteneur des filtres -->
+<div class="filters" id="filters">
+
+        <!-- Filtre voiture électrique -->
+        <div class="filter-item">
+          <label for="electric">Voiture électrique</label>
+          <input type="checkbox" id="electric">
+        </div>
+      
+        <!-- Filtre départ tôt -->
+        <div class="filter-item">
+          <label for="early-departure">Départ tôt</label>
+          <input type="checkbox" id="early-departure">
+        </div>
+      
+        <!-- Filtre étoiles conducteur -->
+        <div class="filter-item">
+            <label for="driver-rating">Note du conducteur</label>
+            <div class="star-rating" id="driver-rating">
+              <span class="star" data-value="1"></span> 
+              <span class="star" data-value="2"></span>
+              <span class="star" data-value="3"></span>
+              <span class="star" data-value="4"></span>
+              <span class="star" data-value="5"></span>
+            </div>
+          </div>
+      
+        <!-- Filtre durée -->
+        <div class="filter-item">
+          <label for="duration">Durée maximale :</label>
+          <input type="range" id="duration" min="1" max="24" step="1" value="5">
+          <span id="duration-value">5 heures</span>
+        </div>
+      
+        <!-- Filtre prix -->
+        <div class="filter-item">
+          <label for="price">Prix maximum :</label>
+          <input type="range" id="price" min="0" max="500" step="10" value="100">
+          <span id="price-value">100</span>
+        </div>
+      </div>
+
+    <section class="container">
+        <div class="profile-container">
+          <img src="../Ressources/jane doe.jpg" alt="Photo de Profil" class="profile-img"> 
+          <div class="profile-info">
+            <h2 class="driver-name">JaneD</h2>
+            <div class="rating">
+              <span class="star filled"></span> <!-- Étoile pleine -->
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star filled"></span>
+              <span class="star"></span> <!-- Étoile vide -->
+            </div>
+          </div>
+        </div>
+
+        <div class="trip-details">
+            <p class="trip-date">Le 25-03-2025</p>
+            <div class="trip-timing">
+              <div class="departure">
+                <h1>08:00</h1>
+                <p>Chamonix,</br>
+                   France
+                </p>
+              </div>
+              <div class="arrival">
+                <h1>12:00</h1>
+                <p>Paris,</br>
+                   France
+                </p>
+              </div>
+            </div>
+        <div class="preferences">
+          <span class="tag">Animaux autorisés</span>
+          <span class="tag">Climatisation</span>
+          <span class="tag">Non-fumeur</span>
+        </div>
+      
+        <div class="price-info">
+          <p class="price">120</p>
+          <p class="seats-available" style="color: red;">2 sièges disponibles</p>
+          <button class="learn-more-btn">En savoir plus</button>
+        </div>

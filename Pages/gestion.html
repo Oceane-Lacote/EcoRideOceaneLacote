@@ -1,0 +1,157 @@
+<style>
+    .header {
+        background-color: #7f6751;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .container {
+        margin-top: 30px;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .btn-validate {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-refuse {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .section-title {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        border-radius: 5px;
+    }
+
+    .card {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .details-btn {
+        background-color: #17a2b8;
+        color: white;
+    }
+</style>
+
+ <!-- Header -->
+ <div class="header">
+    <h1>Tableau de Bord</h1>
+    <p>Bonjour, Employé 894</p>
+</div>
+
+<div class="container">
+    <!-- Gestion des Avis -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="section-title">Gestion des Avis</h5>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                <th>Passager</th>
+                <th>Chauffeur</th>
+                <th>Avis</th>
+                <th>Commentaire</th>
+                <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr data-chauffeur="WandaM" data-rating="4">
+                                        <td>JohnDoe</td>
+                                        <td class="chauffeur-name">WandaM</td>
+                                        <td>4/5</td>
+                                        <td>Le chauffeur était très sympathique.</td>
+                                        <td>
+                                            <button class="btn btn-validate">Valider</button>
+                                            <button class="btn btn-refuse">Refuser</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-chauffeur="SamW" data-rating="3">
+                                        <td>MarieL</td>
+                                        <td class="chauffeur-name">SamW</td>
+                                        <td>3/5</td>
+                                        <td>Le voiture était moche, le chauffeur aussi.</td>
+                                        <td>
+                                            <button class="btn btn-validate">Valider</button>
+                                            <button class="btn btn-refuse">Refuser</button>
+                                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="section-title">Covoiturages Problématiques</h5>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Numéro Covoiturage</th>
+                        <th>Passager</th>
+                        <th>Chauffeur</th>
+                        <th>Descriptif du Trajet</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>12345</td>
+                        <td data-passenger="JohnDoe" data-passenger-email="john@email.fr" data-comment="Le passager a signalé un retard.">
+                            JohnDoe (john@email.fr)
+                        </td>
+                        <td data-driver="MarieL" data-driver-email="marie@email.fr">
+                            MarieL (marie@email.fr.com)
+                        </td>
+                        <td>Paris → Lyon | 15/11/2024 09:00 → 15/11/2024 12:30</td>
+                        <td><button class="btn details-btn" data-bs-toggle="modal" data-bs-target="#problemDetailsModal">Vérifier</button></td>
+                    </tr>
+                    <tr>
+                        <td>12346</td>
+                        <td data-passenger="AlexB" data-passenger-email="alex@email.fr" data-comment="Le chauffeur roulait trop vite.">
+                            AlexB (alex@email.fr)
+                        </td>
+                        <td data-driver="SophieM" data-driver-email="sophie@email.fr">
+                            SophieM (sophie@email.fr)
+                        </td>
+                        <td>Marseille → Nice | 20/11/2024 08:00 → 20/11/2024 10:30</td>
+                        <td><button class="btn details-btn" data-bs-toggle="modal" data-bs-target="#problemDetailsModal">Vérifier</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Modal pour les détails des covoiturages problématiques -->
+    <div class="modal fade" id="problemDetailsModal" tabindex="-1" aria-labelledby="problemDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="problemDetailsModalLabel">Détails du Covoiturage</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Numéro du Covoiturage :</strong> <span id="modal-covoiturage-number"></span></p>
+                    <p><strong>Passager :</strong> <span id="modal-passenger"></span> (<span id="modal-passenger-email"></span>)</p>
+                    <p><strong>Chauffeur :</strong> <span id="modal-driver"></span> (<span id="modal-driver-email"></span>)</p>
+                    <p><strong>Descriptif du Trajet :</strong> <span id="modal-trip-description"></span></p>
+                    <p><strong>Commentaire :</strong> <span id="modal-comment"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

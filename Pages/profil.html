@@ -1,5 +1,5 @@
 <style>
-
+    /* Style de base */
     .profile-header {
         background-color: #D9D9D9;
         color: black;
@@ -16,286 +16,197 @@
         margin-bottom: 10px;
     }
 
-    .section {
+    .profile-header h3 {
+        margin-bottom: 10px;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    /* Alignement horizontal des sections */
+    .sections-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    .section-box {
         background-color: white;
-        border-radius: 10px;
         padding: 20px;
-        margin-bottom: 20px;
+        border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+        width: 30%;
     }
 
+    .section-box:hover {
+        transform: scale(1.05); /* Effet de zoom au survol */
+    }
+
+    .section-box h4 {
+        margin-top: 10px;
+    }
+
+    .collapse-content {
+        margin-top: 20px;
+        display: none;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+    }
+
+    .collapse.show {
+        display: block;
+    }
+
+    /* Image de la voiture et des icônes */
+    .vehicle-icon {
+        font-size: 30px; /* Augmenter la taille des icônes */
+        margin-bottom: 10px;
+    }
+
+    /* Style des boutons */
     .btn-modifier-info {
-    background-color: #FCB941;  /* Couleur de fond */
-    color: black;                /* Couleur du texte */
-    border: none;                /* Enlever la bordure */
-    padding: 10px 20px;          /* Ajuster le padding pour un bon espacement */
-    font-size: 14px;             /* Taille du texte */
-    border-radius: 5px;          /* Coins arrondis */
-}
-
-.btn-modifier-info:hover {
-    background-color: #e69500;  /* Couleur au survol */
-    cursor: pointer;            /* Changer le curseur */
-}
-
-/* Style du bouton modifier les informations */
-.btn-modifier-info {
-    background-color: #FCB941;  /* Couleur de fond */
-    color: white;                /* Couleur du texte */
-    border: none;                /* Enlever la bordure */
-    padding: 10px 20px;          /* Ajuster le padding pour un bon espacement */
-    font-size: 14px;             /* Taille du texte */
-    border-radius: 5px;          /* Coins arrondis */
-}
-
-.btn-modifier-info:hover {
-    background-color: #e69500;  /* Couleur au survol */
-    cursor: pointer;            /* Changer le curseur */
-}
-
-/* Style de la modale */
-.modal-body {
-    font-family: Arial, sans-serif;
-}
-
-.modal-header {
-    background-color: #267AA7;
-    color: white;
-}
-
-.modal-title {
-    font-size: 20px;
-}
-
-/* Style de l'image de profil dans la modale */
-img.rounded-circle {
-    border: 3px solid white;
-    margin-bottom: 15px;
-}
-
-#photo-input {
-    display: none;
-}
-
-/* Style pour le formulaire */
-.form-label {
-    font-weight: bold;
-}
-
-.text-center a {
-    color: #267AA7;
-    font-size: 14px;
-}
-
-    .dropdown-select {
-        margin-bottom: 15px;
-    }
-
-      /* Cartes de préférences */
-      .preference-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #A5D6A7; /* Vert clair */
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .preference-card span {
-            font-size: 16px;
-        }
-
-        .preference-card .delete-btn {
-            background-color: transparent;
-            border: none;
-            color: #ff0000;
-            cursor: pointer;
-        }
-
-    .modal-header {
-        background-color: #267AA7;
+        background-color: #007BFF;
         color: white;
     }
 
-    /* Véhicules : aligner la croix à droite et la rendre rouge */
-.vehicle-item {
-    position: relative; /* Nécessaire pour que la croix soit positionnée correctement */
-    padding-right: 40px; /* Laisser de l'espace pour la croix */
-    font-weight : bold;
-}
+    .btn-modifier-info:hover {
+        background-color: #0056b3;
+    }
 
-.vehicle-item .delete-btn {
-    position: absolute;
-    right: 10px; /* Aligner à droite */
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: transparent;
-    border: none;
-    color: #ff0000; /* Rouge */
-    font-size: 18px; /* Agrandir la croix */
-    cursor: pointer;
-}
+    .btn-profil {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-profil:hover {
+        background-color: #218838;
+    }
+
+    .delete-btn {
+        color: red;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .delete-btn:hover {
+        color: darkred;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        padding: 10px;
+        background-color: #FCB941;
+        color: white;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .section-header:hover {
+        background-color: #e69500;
+    }
+
+    .section-content {
+        display: none;
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-content.open {
+        display: block;
+    }
+
+    .vehicle-item {
+        position: relative;
+        padding-right: 40px;
+        font-weight: bold;
+    }
+
+    .vehicle-item .delete-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: transparent;
+        border: none;
+        color: #ff0000;
+        font-size: 18px;
+        cursor: pointer;
+    }
 </style>
-
-<div class="container mt-5">
-    <!-- Section 1: Profil -->
-    <div class="profile-header">
-        <img src="../Ressources/jane doe.jpg" alt="Photo de Profil">
-        <h3>JaneD</h3>
-        <p>jane.doe@email.com</p>
-        <p>0606060606</p>
-        <button class="btn btn-modifier-info btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">Modifier les informations</button>
-    </div>
-
-   <!-- Modale pour modifier les informations -->
-<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editProfileModalLabel">Modifier les informations du profil</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulaire de modification du profil -->
-                <form id="edit-profile-form">
-                    <div class="mb-3 text-center">
-                        <!-- Photo de profil -->
-                        <img id="profile-img" src="../Ressources/jane doe.jpg" alt="Photo de Profil" class="rounded-circle" style="width: 120px; height: 120px;">
-                        <p><a href="#" id="change-photo" class="text-decoration-none">Modifier la photo</a></p>
-                        <!-- Input pour changer la photo -->
-                        <input type="file" id="photo-input" style="display:none;" accept="image/*">
-                    </div>
-
-                    <!-- Nom -->
-                    <div class="mb-3">
-                        <label for="nom" class="form-label">Nom</label>
-                        <input type="text" class="form-control" id="nom" value="Jane Doe" required>
-                    </div>
-
-                    <!-- Pseudo -->
-                    <div class="mb-3">
-                        <label for="pseudo" class="form-label">Pseudo</label>
-                        <input type="text" class="form-control" id="pseudo" value="JaneD" required>
-                    </div>
-
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" value="jane.doe@email.com" required>
-                    </div>
-
-                    <!-- Mot de passe -->
-                    <div class="mb-3">
-                        <label for="motdepasse" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control" id="motdepasse" value="********" required>
-                    </div>
-
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-    <!-- Section 2: Préférences de covoiturage -->
-    <div class="section">
-        <h4>Préférences de covoiturage</h4>
-
-         <!-- Liste des préférences existantes -->
-         <div id="preferences-list">
-            <div class="preference-card">
-                <span>On se lève aux aurores et on part tôt</span>
-                <button class="delete-btn" onclick="removePreference(this)">✖</button>
-            </div>
-            <div class="preference-card">
-                <span>Sans enfant et en avant!</span>
-                <button class="delete-btn" onclick="removePreference(this)">✖</button>
-            </div>
+ <div class="container mt-5">
+        <div class="profile-header">
+            <img src="../Ressources/jane doe.jpg" alt="Photo de Profil">
+            <h3>JaneD</h3>
+            <p>jane.doe@email.com</p>
         </div>
 
-        <div class="dropdown-select">
-            <label for="animaux" class="form-label">Animaux :</label>
-            <select id="animaux" class="form-select">
-                <option value="pour">J’adore les animaux, c’est oui direct ! 🐾</option>
-                <option value="moyen">Certains animaux passent, d’autres, faut voir… 🤔</option>
-                <option value="contre">Voyager avec ? C’est mort, désolé ! ✈️🚫</option>
-            </select>
-        </div>
-        <div class="dropdown-select">
-            <label for="cigarette" class="form-label">Cigarette :</label>
-            <select id="cigarette" class="form-select">
-                <option value="pour">La clope ? Ok, on fera des pauses, mais tu m'en offres une ! 🚬😉</option>
-                <option value="moyen">Des fois ça passe, des fois… ça dépend ! 🤷‍♂️</option>
-                <option value="contre">La clope ? C’est un grand non, désolé ! 🚭</option>
-            </select>
-        </div>
-        <div class="mt-3">
-            <label for="custom-preference" class="form-label">Autre préférence :</label>
-            <input type="text" id="custom-preference" class="form-control" placeholder="Ajoutez une préférence">
-        </div>
-    </div>
+        <!-- Sections alignées horizontalement -->
+        <div class="sections-container">
 
-    <!-- Section 3: Véhicules -->
-    <div class="section">
-        <h4>Mes Véhicules</h4>
-        <ul class="list-group mb-3" id="vehicle-list">
-            <li class="list-group-item vehicle-item">
-                Toyota Prius </br> 
-                Verte - CD-123-AB - Électrique 
-                <span class="delete-btn" onclick="deleteVehicle(this)">&#10006;</span>
-            </li>
-            <li class="list-group-item vehicle-item">
-                Peugeot 208 </br>
-                Rouge - AB-123-CD - Essence 
-                <span class="delete-btn" onclick="deleteVehicle(this)">&#10006;</span>
-            </li>
-        </ul>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVehicleModal">Ajouter un véhicule</button>
-    </div>
-</div>
-
-<!-- Modale pour Ajouter un Véhicule -->
-<div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addVehicleModalLabel">Ajouter un Véhicule</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- Section Profil -->
+            <div class="section-box" data-bs-toggle="collapse" href="#profil-info" role="button" aria-expanded="false" aria-controls="profil-info">
+                <i class="vehicle-icon fa fa-user"></i> <!-- Icône Profil -->
+                <h4>Profil</h4>
             </div>
-            <div class="modal-body">
-                <form id="vehicle-form">
-                    <div class="mb-3">
-                        <label for="immatriculation" class="form-label">Immatriculation</label>
-                        <input type="text" id="immatriculation" class="form-control" placeholder="Ex : AB-123-CD" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="marque" class="form-label">Marque</label>
-                        <input type="text" id="marque" class="form-control" placeholder="Ex : Toyota" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="modele" class="form-label">Modèle</label>
-                        <input type="text" id="modele" class="form-control" placeholder="Ex : Prius" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="couleur" class="form-label">Couleur</label>
-                        <input type="text" id="couleur" class="form-control" placeholder="Ex : Bleu" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="electrique" class="form-label">Type :</label>
-                        <select id="electrique" class="form-select">
-                            <option value="oui">Électrique</option>
-                            <option value="non">Non Électrique</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Ajouter</button>
-                </form>
+
+            <!-- Contenu de la section Profil -->
+            <div class="collapse" id="profil-info">
+                <div class="collapse-content">
+                    <h5>Nom: Jane Doe</h5>
+                    <p>Email: jane.doe@email.com</p>
+                    <button class="btn btn-modifier-info">Modifier Profil</button>
+                </div>
+            </div>
+
+            <!-- Section Véhicules -->
+            <div class="section-box" data-bs-toggle="collapse" href="#vehicle-info" role="button" aria-expanded="false" aria-controls="vehicle-info">
+                <i class="vehicle-icon fa fa-car"></i> <!-- Icône Véhicule -->
+                <h4>Véhicules</h4>
+            </div>
+
+            <!-- Contenu de la section Véhicules -->
+            <div class="collapse" id="vehicle-info">
+                <div class="collapse-content">
+                    <h5>Mes Véhicules:</h5>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item vehicle-item">
+                            Toyota Prius <br> Verte - CD-123-AB - Électrique
+                            <i class="vehicle-icon fa fa-bolt"></i> <!-- Icône Électrique -->
+                            <button class="delete-btn">&#10006;</button>
+                        </li>
+                        <li class="list-group-item vehicle-item">
+                            Peugeot 208 <br> Rouge - AB-123-CD - Thermique
+                            <button class="delete-btn">&#10006;</button>
+                        </li>
+                    </ul>
+                    <button class="btn btn-profil" data-bs-toggle="modal" data-bs-target="#addVehicleModal">Ajouter un véhicule</button>
+                </div>
+            </div>
+
+            <!-- Section Historique -->
+            <div class="section-box" data-bs-toggle="collapse" href="#history-info" role="button" aria-expanded="false" aria-controls="history-info">
+                <i class="vehicle-icon fa fa-history"></i> <!-- Icône Historique -->
+                <h4>Historique</h4>
+            </div>
+
+            <!-- Contenu de la section Historique -->
+            <div class="collapse" id="history-info">
+                <div class="collapse-content">
+                    <h5>Historique des trajets:</h5>
+                    <ul>
+                        <li>Paris → Lyon | 15/11/2024</li>
+                        <li>Marseille → Nice | 25/11/2024</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../script/profil.js"></script>

@@ -121,7 +121,7 @@
     font-weight: bold;
     font-size: 20px;
     color: black;
-    border-radius: 50%; /* Cercle parfait */
+    border-radius: 50%; 
     z-index: 1;
     margin: 0 -25px;
     line-height: 1;
@@ -179,36 +179,41 @@
 
     <article>
         <div class="container p-4">
-          <div class="row row-cols-2 align-items-center">
-            <div class="col">
-                <p class="text-justify">
-                    Réduisez votre impact environnemental tout en facilitant vos déplacements grâce à notre solution de covoiturage écologique.🌍 </p>
-            </div>
-         <div class="col">
-            <img class="w-50 rounded" src="../Ressources/home1.png">
-            <img/>
-        </div>
-    </div>
-</article>
-
-<article class="bg-secondary text-white">
-    <div class="container p-4">
-      <div class="row row-cols-2 align-items-center">
-        <div class="col">
-            <img class="w-50 rounded" src="../Ressources/home 2.png"><img/>
-            </div>
-        <div class="col">
-            <p class="text-justify">
-                Adoptez le covoiturage responsable dès aujourd’hui, et obtenez 20 crédits offerts pour votre premier voyage ✨ 
-            </p>
-            <div class="text-center pt-5 ">
-                <button class="btn">S'inscrire</button>
+            <div class="row row-cols-2 align-items-center g-5"> <!-- g-5 pour un espacement global entre les colonnes -->
+                <div class="col">
+                    <!-- Conteneur avec fond bleu, padding et coins arrondis -->
+                    <div class="bg-primary text-white p-5 rounded-3">
+                        <p class="text-justify">
+                            Réduisez votre empreinte écologique et simplifiez vos trajets avec notre solution de covoiturage éco-friendly ! 🌱🚗
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img class="w-100 rounded" src="../Ressources/home-long.png" alt="Covoiturage Image">
+                </div>
             </div>
         </div>
-    </div>
-        
-</article>
-</section>
-
-
-
+    </article>
+    
+    <article>
+        <div class="container p-4">
+            <div class="row row-cols-2 align-items-center g-5"> <!-- g-5 pour un espacement global entre les colonnes -->
+                <div class="col">
+                    <img class="w-100 rounded" src="../Ressources/home2-long.png" alt="Covoiturage Image">
+                </div>
+                <div class="col">
+                    <!-- Conteneur bleu avec plus de padding et coins arrondis -->
+                    <div class="bg-secondary text-white p-5 rounded-3">
+                        <p class="text-justify">
+                            Passez au covoiturage responsable dès maintenant et profitez de 20 crédits offerts pour votre premier trajet ! 🚗💚✨                        </p>
+                        <div class="text-center pt-5">
+                            <!-- Bouton avec fond FCB941 -->
+                            <a href="/signup">
+                                <button class="btn" style="background-color: #FCB941; color: white;">S'inscrire</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </article>

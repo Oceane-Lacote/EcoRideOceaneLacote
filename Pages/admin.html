@@ -1,0 +1,228 @@
+<style>
+    /* Cartes */
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Titres de section */
+.section-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #495057;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #A5d6a7;
+    padding-bottom: 5px;
+}
+
+/* Tableau */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead th {
+    background-color: #267aa7;
+    color: white;
+    text-align: left;
+    padding: 10px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody td {
+    padding: 10px;
+}
+
+tbody td .btn {
+    margin-right: 5px;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 12px;
+}
+
+/* Graphiques */
+canvas {
+    max-width: 100%;
+    margin-top: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+/* Modal */
+.modal-header {
+    background-color: #267aa7;
+    color: white;
+}
+
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-body label {
+    font-weight: bold;
+}
+
+/* Boutons */
+.btn {
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #fcb941;
+    border-color: #fcb941;
+}
+
+.btn-primary:hover {
+    background-color: #dea337;
+    border-color: #dea337;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #a71d2a;
+    border-color: #a71d2a;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #1e7e34;
+    border-color: #1e7e34;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.1rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+    }
+
+    canvas {
+        margin-top: 20px;
+    }
+}
+</style>
+
+
+
+
+<div class="container mt-5">
+    <!-- Section Gestion des Comptes -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="section-title">Gestion des Comptes</h5>
+            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createEmployeeModal">Créer un Compte Employé</button>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="accounts-table">
+                    <tr>
+                        <td>Carole Danvers</td>
+                        <td>carole.danvers@email.fr</td>
+                        <td>Employé</td>
+                        <td><span class="badge bg-success">Actif</span></td>
+                        <td>
+                            <button class="btn btn-danger suspend-btn">Suspendre</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Stan Marsh</td>
+                        <td>stan.marsh@email.fr</td>
+                        <td>Utilisateur</td>
+                        <td><span class="badge bg-danger">Suspendu</span></td>
+                        <td>
+                            <button class="btn btn-success reactivate-btn">Réactiver</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section Graphiques -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="section-title">Statistiques</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Covoiturages par jour</h6>
+                    <canvas id="ridesChart"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <h6>Crédit gagné par jour</h6>
+                    <canvas id="earningsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Crédits -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="section-title">Total des Crédits</h5>
+            <p class="fs-4"><strong id="total-credits">189,000 crédits</strong></p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour créer un compte employé -->
+<div class="modal fade" id="createEmployeeModal" tabindex="-1" aria-labelledby="createEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createEmployeeModalLabel">Créer un Compte Employé</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="create-employee-form">
+                    <div class="mb-3">
+                        <label for="employee-name" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="employee-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="employee-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="employee-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="employee-password" class="form-label">Mot de passe</label>
+                        <input type="password" class="form-control" id="employee-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Créer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
