@@ -8,6 +8,8 @@ export const allRoutes = [
     new Route("/covoiturage", "Covoiturage", "/pages/covoiturage.html", "/script/covoiturage.js"),
     new Route("/gestion", "Employé", "/pages/gestion.html", "/script/gestion.js"),
     new Route("/admin", "Administrateur", "/pages/admin.html", "/script/admin.js"),
+    new Route("/recherche", "Recherche", "/pages/recherche.html", "/script/recherche.js"),
+    new Route("/resultat", "resultat", "/pages/resultat.html", "/script/resultat.js"),
 ];
 //Le titre s'affiche comme ceci : Route.titre - websitename
 export const websiteName = "EcoRide";

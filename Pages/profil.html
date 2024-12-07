@@ -1,5 +1,6 @@
-<style>
-    /* Style de base */
+<style> 
+
+/* Header du profil */
     .profile-header {
         background-color: #D9D9D9;
         color: black;
@@ -17,18 +18,20 @@
     }
 
     .profile-header h3 {
-        margin-bottom: 10px;
         font-size: 28px;
         font-weight: bold;
     }
 
-    /* Alignement horizontal des sections */
+    /* Conteneur des sections */
     .sections-container {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-around;
         margin-top: 20px;
+        gap: 20px;
     }
 
+    /* Box des sections */
     .section-box {
         background-color: white;
         padding: 20px;
@@ -37,48 +40,63 @@
         text-align: center;
         cursor: pointer;
         transition: transform 0.3s ease-in-out;
-        width: 30%;
+        flex: 1 1 calc(30% - 20px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .section-box:hover {
-        transform: scale(1.05); /* Effet de zoom au survol */
+        transform: scale(1.05);
+    }
+
+    .section-box i {
+        font-size: 35px;
+        margin-bottom: 10px;
     }
 
     .section-box h4 {
         margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
     }
 
+    /* Collapse Section */
     .collapse-content {
         margin-top: 20px;
-        display: none;
-        padding: 10px;
+        padding: 20px;
         background-color: #f9f9f9;
         border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     .collapse.show {
-        display: block;
+        display: block !important;
     }
 
-    /* Image de la voiture et des icônes */
-    .vehicle-icon {
-        font-size: 30px; /* Augmenter la taille des icônes */
-        margin-bottom: 10px;
-    }
-
-    /* Style des boutons */
-    .btn-modifier-info {
-        background-color: #007BFF;
+    /* Boutons */
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
         color: white;
+        text-align: center;
+        border: none;
+        cursor: pointer;
     }
 
-    .btn-modifier-info:hover {
+    .btn-primary {
+        background-color: #007BFF;
+    }
+
+    .btn-primary:hover {
         background-color: #0056b3;
     }
 
     .btn-profil {
         background-color: #28a745;
-        color: white;
     }
 
     .btn-profil:hover {
@@ -87,8 +105,8 @@
 
     .delete-btn {
         color: red;
-        background: none;
         border: none;
+        background: none;
         cursor: pointer;
         font-size: 18px;
     }
@@ -97,116 +115,122 @@
         color: darkred;
     }
 
-    .section-header {
+    /* Formulaire */
+    #startTripForm {
         display: flex;
-        justify-content: space-between;
-        cursor: pointer;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    #startTripForm input, #startTripForm button {
         padding: 10px;
-        background-color: #FCB941;
-        color: white;
+        font-size: 16px;
         border-radius: 5px;
-        margin-bottom: 10px;
+        border: 1px solid #ddd;
     }
 
-    .section-header:hover {
-        background-color: #e69500;
+    #startTripForm input:focus {
+        outline: none;
+        border-color: #007BFF;
     }
 
-    .section-content {
-        display: none;
-        background-color: white;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    #startTripForm button {
+        background-color: #28a745;
     }
 
-    .section-content.open {
-        display: block;
+    #startTripForm button:hover {
+        background-color: #218838;
     }
 
-    .vehicle-item {
-        position: relative;
-        padding-right: 40px;
-        font-weight: bold;
-    }
-
-    .vehicle-item .delete-btn {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: transparent;
-        border: none;
-        color: #ff0000;
-        font-size: 18px;
-        cursor: pointer;
+    /* Historique */
+    .history-list li {
+        margin: 5px 0;
     }
 </style>
- <div class="container mt-5">
-        <div class="profile-header">
-            <img src="../Ressources/jane doe.jpg" alt="Photo de Profil">
-            <h3>JaneD</h3>
-            <p>jane.doe@email.com</p>
+
+<div class="container mt-5">
+    <!-- Profil Header -->
+    <div class="profile-header">
+        <img src="../Ressources/jane doe.jpg" alt="Photo de Profil">
+        <h3>Jane Doe</h3>
+        <p>jane.doe@email.com</p>
+    </div>
+
+    <!-- Sections -->
+    <div class="sections-container">
+
+        <!-- Section Profil -->
+        <div class="section-box" data-bs-toggle="collapse" href="#profil-info">
+            <i class="fa fa-user"></i>
+            <h4>Profil</h4>
+        </div>
+        <div class="collapse" id="profil-info">
+            <div class="collapse-content">
+                <h5>Nom: Jane Doe</h5>
+                <p>Email: jane.doe@email.com</p>
+                <div class="role-selection">
+                    <input type="checkbox" id="passengerRole" name="role" value="passenger">
+                    <label for="passengerRole">Passager</label>
+                    <input type="checkbox" id="driverRole" name="role" value="driver">
+                    <label for="driverRole">Chauffeur</label>
+                </div>
+                <button class="btn btn-modifier-info">Enregistrer</button>
+            </div>
         </div>
 
-        <!-- Sections alignées horizontalement -->
-        <div class="sections-container">
-
-            <!-- Section Profil -->
-            <div class="section-box" data-bs-toggle="collapse" href="#profil-info" role="button" aria-expanded="false" aria-controls="profil-info">
-                <i class="vehicle-icon fa fa-user"></i> <!-- Icône Profil -->
-                <h4>Profil</h4>
+        <!-- Section Véhicules -->
+        <div class="section-box" data-bs-toggle="collapse" href="#vehicle-info">
+            <i class="fa fa-car"></i>
+            <h4>Véhicules</h4>
+        </div>
+        <div class="collapse" id="vehicle-info">
+            <div class="collapse-content">
+                <h5>Mes Véhicules :</h5>
+                <ul class="list-group">
+                    <li class="list-group-item vehicle-item">
+                        Toyota Prius - Verte <i class="fa fa-bolt"></i>
+                        <button class="delete-btn">&#10006;</button>
+                    </li>
+                    <li class="list-group-item vehicle-item">
+                        Peugeot 208 - Rouge
+                        <button class="delete-btn">&#10006;</button>
+                    </li>
+                </ul>
+                <button class="btn btn-profil">Ajouter un véhicule</button>
             </div>
+        </div>
 
-            <!-- Contenu de la section Profil -->
-            <div class="collapse" id="profil-info">
-                <div class="collapse-content">
-                    <h5>Nom: Jane Doe</h5>
-                    <p>Email: jane.doe@email.com</p>
-                    <button class="btn btn-modifier-info">Modifier Profil</button>
-                </div>
+        <!-- Section Historique -->
+        <div class="section-box" data-bs-toggle="collapse" href="#history-info">
+            <i class="fa fa-history"></i>
+            <h4>Historique</h4>
+        </div>
+        <div class="collapse" id="history-info">
+            <div class="collapse-content">
+                <ul class="history-list">
+                    <li>Paris → Lyon | 15/11/2024</li>
+                    <li>Marseille → Nice | 25/11/2024</li>
+                </ul>
             </div>
+        </div>
 
-            <!-- Section Véhicules -->
-            <div class="section-box" data-bs-toggle="collapse" href="#vehicle-info" role="button" aria-expanded="false" aria-controls="vehicle-info">
-                <i class="vehicle-icon fa fa-car"></i> <!-- Icône Véhicule -->
-                <h4>Véhicules</h4>
-            </div>
-
-            <!-- Contenu de la section Véhicules -->
-            <div class="collapse" id="vehicle-info">
-                <div class="collapse-content">
-                    <h5>Mes Véhicules:</h5>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item vehicle-item">
-                            Toyota Prius <br> Verte - CD-123-AB - Électrique
-                            <i class="vehicle-icon fa fa-bolt"></i> <!-- Icône Électrique -->
-                            <button class="delete-btn">&#10006;</button>
-                        </li>
-                        <li class="list-group-item vehicle-item">
-                            Peugeot 208 <br> Rouge - AB-123-CD - Thermique
-                            <button class="delete-btn">&#10006;</button>
-                        </li>
-                    </ul>
-                    <button class="btn btn-profil" data-bs-toggle="modal" data-bs-target="#addVehicleModal">Ajouter un véhicule</button>
-                </div>
-            </div>
-
-            <!-- Section Historique -->
-            <div class="section-box" data-bs-toggle="collapse" href="#history-info" role="button" aria-expanded="false" aria-controls="history-info">
-                <i class="vehicle-icon fa fa-history"></i> <!-- Icône Historique -->
-                <h4>Historique</h4>
-            </div>
-
-            <!-- Contenu de la section Historique -->
-            <div class="collapse" id="history-info">
-                <div class="collapse-content">
-                    <h5>Historique des trajets:</h5>
-                    <ul>
-                        <li>Paris → Lyon | 15/11/2024</li>
-                        <li>Marseille → Nice | 25/11/2024</li>
-                    </ul>
-                </div>
+        <!-- Section Démarrer un Covoiturage -->
+        <div class="section-box" data-bs-toggle="collapse" href="#start-trip-info">
+            <i class="fa fa-play-circle"></i>
+            <h4>Démarrer un Covoiturage</h4>
+        </div>
+        <div class="collapse" id="start-trip-info">
+            <div class="collapse-content">
+                <form id="startTripForm">
+                    <label for="startAddress">Adresse de départ</label>
+                    <input type="text" id="startAddress" placeholder="Ex: 10 Rue de Paris, Lyon" required>
+                    <label for="endAddress">Adresse d'arrivée</label>
+                    <input type="text" id="endAddress" placeholder="Ex: Gare Montparnasse, Paris" required>
+                    <label for="price">Prix (€)</label>
+                    <input type="number" id="price" placeholder="Ex: 50" required>
+                    <button type="submit">Publier</button>
+                </form>
             </div>
         </div>
     </div>
+</div>

@@ -110,3 +110,10 @@ stars.forEach(star => {
   });
 });
 
+function showTripModal() {
+  document.getElementById('tripModal').style.display = 'block';
+}
+
+function closeTripModal() {
+  document.getElementById('tripModal').style.display = 'none';
+}
