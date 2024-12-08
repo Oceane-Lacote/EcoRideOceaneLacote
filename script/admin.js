@@ -90,3 +90,32 @@ document.getElementById('create-employee-form').addEventListener('submit', funct
     const modal = bootstrap.Modal.getInstance(document.getElementById('createEmployeeModal'));
     modal.hide();
 });
+
+
+ // Script pour mettre à jour la date des crédits
+ document.addEventListener("DOMContentLoaded", function () {
+    const dateElement = document.getElementById("credits-date");
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("fr-FR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    });
+    dateElement.textContent = `(au ${formattedDate})`;
+});
+
+// Script pour filtrer les utilisateurs via la barre de recherche
+document.getElementById("search-bar").addEventListener("input", function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll("#accounts-table tr");
+
+    rows.forEach((row) => {
+        const name = row.cells[0].textContent.toLowerCase();
+        const email = row.cells[1].textContent.toLowerCase();
+        if (name.includes(filter) || email.includes(filter)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+});
