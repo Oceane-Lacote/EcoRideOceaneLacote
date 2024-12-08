@@ -1,41 +1,158 @@
-<div class="hero-scene text-center text-white">
-    <div class="hero-scene-content">
-        <H1>Inscription</H1>
-    </div>
+<style>
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5%;
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 40px;
+      background-color: white;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #fcb941;
+      outline: none;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 14px;
+      background-color: #fcb941;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-button:hover {
+      background-color: #be9038;
+    }
+
+    .signup {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .signup a {
+      text-decoration: none;
+      color: #fcb941;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .login-link a {
+      text-decoration: none;
+      color: #fcb941;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Ensuring the signup form is properly styled */
+    #signup-form {
+      display: none;
+    }
+
+</style>
+
+<div class="container">
+  <div class="image-section">
+    <img src="../Ressources/connexion.png" alt="Illustration" class="image">
   </div>
-  
-  <div class="container">
-  
-  <form>
-    <div class="mb-3 mt-3">
-        <label for="NomInput" class="form-label">Nom</label>
-        <input type="texte" class="form-control" id="NomInput" placeholder="Votre Nom">
+  <div class="form-section" id="form-section">
+    <!-- Default login form -->
+    <h1 id="form-title">Connecte toi ! </h1>
+    <form action="#" method="post" id="login-form">
+      <div class="input-group">
+        <input type="email" name="email" placeholder="Email" required>
       </div>
-      <div class="mb-3 mt-3">
-        <label for="PrenomInput" class="form-label">Prénom</label>
-        <input type="texte" class="form-control" id="PrenomInput" placeholder="Votre Prénom">
+      <div class="input-group">
+        <input type="password" name="motdepasse" placeholder="Mot de passe" required>
       </div>
-      <div class="mb-3 mt-3">
-        <label for="PseudoInput" class="form-label">Pseudo</label>
-        <input type="texte" class="form-control" id="PseudoInput" placeholder="Votre Pseudo">
-      </div>
-      <div class="mb-3 mt-3">
-        <label for="EmailInput" class="form-label">Email</label>
-        <input type="email" class="form-control" id="EmailInput" placeholder="votre@email.com">
-      </div>
-      <div class="mb-3">
-        <label for="PasswordInput" class="form-label">Mot de passe</label>
-        <input type="password" class="form-control" id="PasswordInput">
-      </div>
-      <div class="mb-3">
-        <label for="ValidatePasswordInput" class="form-label"> Validez votre Mot de passe</label>
-        <input type="password" class="form-control" id="ValidatePasswordInput">
-      </div>
-      <div class="text-center">
-      <button type="submit" class="btn btn-primary">Inscription</button>
-    </div>
+      <button type="submit" class="login-button">Se connecter</button>
+      <p class="signup">Tu n'as pas de compte? <a href="#" id="sign-up-link">Inscris-toi!</a></p>
     </form>
-    <div class="text-center pt-3 pb-5">
-      <a href="/signin">Vous avez déjà un compte ? Connectez-vous ici !</a>
-    </div>
   </div>
+</div>
+
+<!-- Registration form (initially hidden) -->
+<div id="signup-form" style="display: none;">
+  <div class="form-section">
+    <h1>Rejoins le mouvement !</h1>
+    <form action="#" method="post">
+      <div class="input-group">
+        <input type="text" name="prenom" placeholder="Prénom" required>
+      </div>
+      <div class="input-group">
+        <input type="text" name="last-name" placeholder="Nom" required>
+      </div>
+      <div class="input-group">
+        <input type="text" name="pseudo" placeholder="Pseudo" required>
+      </div>
+      <div class="input-group">
+        <input type="email" name="email" placeholder="Email" required>
+      </div>
+      <div class="input-group">
+        <input type="password" name="motdepasse" placeholder="Mot de passe" required>
+      </div>
+      <div class="input-group">
+        <input type="password" name="confirm-motdepasse" placeholder="Confirmer le Mot de passe" required>
+      </div>
+      <button type="submit" class="login-button">S'inscrire</button>
+      <p class="login-link">Tu as déjà un compte? <a href="#" id="login-link">Connecte toi maintenant!</a></p>
+    </form>
+  </div>
+</div>
