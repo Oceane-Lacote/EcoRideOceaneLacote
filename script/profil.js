@@ -35,30 +35,12 @@ function deleteVehicle(button) {
     listItem.remove();
 }
 
-document.querySelectorAll('.vehicle-item').forEach((vehicle) => {
-    const type = vehicle.getAttribute('data-type'); // Récupère le type du véhicule
 
-    if (type === 'electrique') {
-        // Crée un élément image
-        const icon = document.createElement('img');
-        icon.src = '../Ressources/voiture-ecolo.png'; // Chemin de l'icône
-        icon.alt = 'Électrique';
-        icon.className = 'vehicle-icon'; // Classe CSS pour le style
-
-        // Insère l'image avant la croix
-        const deleteBtn = vehicle.querySelector('.delete-btn');
-        vehicle.insertBefore(icon, deleteBtn);
-    }
-});
-
-// Gestion des rôles (Passager, Chauffeur, Les deux)
-document.querySelectorAll('.role-selection input').forEach((checkbox) => {
-    checkbox.addEventListener('change', function () {
-        const selectedRoles = Array.from(document.querySelectorAll('.role-selection input:checked'))
-            .map((input) => input.value);
-        console.log("Rôles sélectionnés:", selectedRoles);
-    });
-});
+// Fonction pour afficher ou cacher une section
+function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    section.classList.toggle('open');
+}
 
 // Formulaire pour démarrer un covoiturage
 document.getElementById('startTripForm').addEventListener('submit', function (event) {
@@ -101,9 +83,11 @@ function deleteVehicle(button) {
 }
 
 // Mettre à jour la liste des véhicules
-document.getElementById('addVehicleForm').addEventListener('submit', function (event) {
+document.getElementById('addVehicleModal').addEventListener('submit', function (event) {
     event.preventDefault();
     const vehicleName = document.getElementById('vehicle-name').value;
+    const vehicleModel = document.getElementById('vehicle-model').value;
+    const vehicleColor = document.getElementById('vehicle-color').value;
     const vehicleType = document.getElementById('vehicle-type').value;
     const vehiclePlate = document.getElementById('vehicle-plate').value;
 
@@ -111,11 +95,11 @@ document.getElementById('addVehicleForm').addEventListener('submit', function (e
     const newVehicle = document.createElement('li');
     newVehicle.classList.add('list-group-item', 'vehicle-item');
     newVehicle.innerHTML = `
-        ${vehicleName} <br> ${vehiclePlate} - ${vehicleType}
+        ${vehicleName}, ${vehicleModel} <br> ${vehicleColor} <br> ${vehiclePlate} - ${vehicleType}
         <button class="delete-btn" onclick="deleteVehicle(this)">&#10006;</button>
     `;
     vehicleList.appendChild(newVehicle);
-    console.log(`Nouveau véhicule ajouté: ${vehicleName}, ${vehicleType}, ${vehiclePlate}`);
+    console.log(`Nouveau véhicule ajouté: ${vehicleName}, ${vehicleModel}, ${vehicleColor}, ${vehicleType}, ${vehiclePlate}`);
 
     // Réinitialiser le formulaire
     document.getElementById('addVehicleForm').reset();
@@ -127,3 +111,60 @@ document.getElementById('price').addEventListener('input', function () {
     const prixNet = prix - 2;
     document.getElementById('net-price-display').innerText = prixNet > 0 ? `${prixNet} crédits nets` : "Prix insuffisant";
 });
+
+function toggleSection(sectionId) {
+    // Ferme toutes les autres sections
+    const allSections = document.querySelectorAll('.section-content');
+    allSections.forEach(section => {
+        if (section.id !== sectionId) {
+            section.classList.remove('open');
+        }
+    });
+
+    // Ouvre ou ferme la section ciblée
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection.classList.contains('open')) {
+        targetSection.classList.remove('open');
+    } else {
+        targetSection.classList.add('open');
+    }
+}
+
+// Bouton pour enregistrer les rôles sélectionnés
+document.getElementById('saveRolesBtn').addEventListener('click', () => {
+    // Récupérer les checkboxes dans la modale
+    const checkboxes = document.querySelectorAll('.role-selection .form-check-input');
+    const selectedRoles = Array.from(checkboxes)
+        .filter(box => box.checked) // Récupère uniquement les cases cochées
+        .map(box => box.value);    // Récupère les valeurs des cases cochées
+
+    // Mettre à jour l'affichage dans le profil
+    const rolesDisplay = document.getElementById('selectedRoles');
+    if (selectedRoles.length > 0) {
+        rolesDisplay.textContent = selectedRoles.join(', ');
+    } else {
+        rolesDisplay.textContent = 'Aucun';
+    }
+
+    // Fermer la modale (optionnel, si désiré)
+    const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
+    modal.hide();
+});
+
+// Fonction pour afficher la note en étoiles
+function displayStarRating(rating) {
+    const stars = document.querySelectorAll('.star-rating .star');
+    
+    // Boucle à travers chaque étoile et ajoute ou retire la classe "filled"
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('filled'); // Ajouter la classe "filled" pour l'or
+        } else {
+            star.classList.remove('filled'); // Retirer la classe "filled" pour l'enlever
+        }
+    });
+}
+
+const tripRatings = [4, 5, 3, 4, 5]; // Notes des anciens trajets
+const averageRating = tripRatings.reduce((a, b) => a + b, 0) / tripRatings.length;
+displayStarRating(Math.round(averageRating)); // Calcul et affichage de la note

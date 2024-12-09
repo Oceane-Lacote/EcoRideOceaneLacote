@@ -1,6 +1,4 @@
-<style> 
-
-/* Header du profil */
+<style>
     .profile-header {
         background-color: #D9D9D9;
         color: black;
@@ -8,7 +6,7 @@
         border-radius: 10px;
         text-align: center;
     }
-
+    
     .profile-header img {
         width: 120px;
         height: 120px;
@@ -16,221 +14,335 @@
         border: 3px solid white;
         margin-bottom: 10px;
     }
-
+    
     .profile-header h3 {
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    /* Conteneur des sections */
-    .sections-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        margin-top: 20px;
-        gap: 20px;
-    }
-
-    /* Box des sections */
-    .section-box {
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        cursor: pointer;
-        transition: transform 0.3s ease-in-out;
-        flex: 1 1 calc(30% - 20px);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .section-box:hover {
-        transform: scale(1.05);
-    }
-
-    .section-box i {
-        font-size: 35px;
         margin-bottom: 10px;
     }
-
-    .section-box h4 {
-        margin-top: 10px;
-        font-size: 18px;
+    
+    .section-header  {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        padding: 20px 100px;
+        background-color: #267aa7;
+        color: white;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: center;
         font-weight: bold;
     }
 
-    /* Collapse Section */
-    .collapse-content {
-        margin-top: 20px;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+    
+    /* Style pour la note en étoiles */
+.star-rating {
+    font-size: 20px;
+    color: #ccc; /* Gris par défaut */
+}
 
-    .collapse.show {
-        display: block !important;
-    }
+.star-rating .star {
+    margin-right: 5px;
+}
 
-    /* Boutons */
-    .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-        color: white;
-        text-align: center;
-        border: none;
-        cursor: pointer;
-    }
+.star-rating .filled {
+    color: gold; /* Couleur des étoiles remplies */
+}
 
-    .btn-primary {
-        background-color: #007BFF;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    .btn-profil {
-        background-color: #28a745;
-    }
-
-    .btn-profil:hover {
-        background-color: #218838;
-    }
-
-    .delete-btn {
-        color: red;
-        border: none;
-        background: none;
-        cursor: pointer;
-        font-size: 18px;
-    }
-
-    .delete-btn:hover {
-        color: darkred;
-    }
-
-    /* Formulaire */
-    #startTripForm {
+    .sections-container{
         display: flex;
-        flex-direction: column;
-        gap: 15px;
+        justify-content: space-around;
+        margin-top: 20px;
     }
 
-    #startTripForm input, #startTripForm button {
-        padding: 10px;
-        font-size: 16px;
+    
+    .section-header:hover {
+        background-color: #e69500;
+    }
+    
+    .section-content {
+        display: none;
+        background-color: #D9D9D9;
+        padding: 20px;
         border-radius: 5px;
-        border: 1px solid #ddd;
+        margin-bottom: 15px;
     }
-
-    #startTripForm input:focus {
-        outline: none;
-        border-color: #007BFF;
+    
+    .section-content.open {
+        display: block;
     }
-
-    #startTripForm button {
-        background-color: #28a745;
+    
+    .btn-modifier-info {
+        background-color: #FCB941;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 5px;
     }
-
-    #startTripForm button:hover {
-        background-color: #218838;
+    
+    .btn-modifier-info:hover {
+        background-color: #e69500;
     }
+    #vehicles {
+    margin-top: 20px; /* Espace entre le titre et le contenu de la section */
+}
 
-    /* Historique */
-    .history-list li {
-        margin: 5px 0;
+.list-group {
+    margin-top: 10px; /* Espace entre la liste et le bouton "Ajouter un véhicule" */
+    gap: 15px; /* Ajout d'un espacement entre les éléments */
+    display: flex;
+    flex-direction: column; /* Dispose les éléments verticalement */
+}
+
+.list-group-item {
+    padding: 15px; /* Plus de padding pour aérer chaque élément */
+    margin-bottom: 10px; /* Espace entre les éléments de la liste */
+    border: 1px solid #ccc; /* Ajout d'une bordure légère */
+    border-radius: 5px; /* Coins arrondis pour plus d'esthétique */
+    background-color: #f9f9f9; /* Couleur de fond légère */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre pour un effet de relief */
+}
+
+.vehicle-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Espace entre les lignes de texte */
+    line-height: 1.5; /* Améliore la lisibilité en augmentant l'interligne */
+}
+
+.vehicle-icon {
+    margin-right: 10px; /* Ajoute un espace entre l'icône et le texte */
+}
+
+.btn-modifier-info {
+    margin-top: 15px; /* Espace au-dessus du bouton "Ajouter un véhicule" */
+    display: block;
+    width: 100%; /* Bouton centré et élargi */
+    text-align: center;
+}
+    .vehicle-item .delete-btn {
+        position: absolute;
+        right: 10px;
+        top: 25%;
+        transform: translateY(-50%);
+        background-color: transparent;
+        border: none;
+        color: #ff0000;
+        font-size: 18px;
+        cursor: pointer;
     }
-</style>
+    
+    
+    
+    </style>
+    
+    <div class="container mt-5">
+        <!-- Section Profil -->
+        <div class="profile-header">
+            <img src="../Ressources/jane doe.jpg" alt="Photo de Profil">
+            <h3>JaneD</h3>
+            <div class="star-rating" id="star-rating">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+            </div>
+        </div>
 
-<div class="container mt-5">
-    <!-- Profil Header -->
-    <div class="profile-header">
-        <img src="../Ressources/jane doe.jpg" alt="Photo de Profil">
-        <h3>Jane Doe</h3>
-        <p>jane.doe@email.com</p>
+    <div class="sections-container">
+        <!-- Section Informations Personnelles -->
+        <div class="section-box">
+            <div class="section-header" onclick="toggleSection('personal-info')">
+                <span>Profil</span>
+            </div>
+            <div id="personal-info" class="section-content">
+                <p><strong>Nom:</strong> Jane Doe</p>
+                <p><strong>Pseudo:</strong> JaneD</p>
+                <p><strong>Email:</strong> jane.doe@email.com</p>
+                <p><strong>Téléphone:</strong> 0606060606</p>
+                <p><strong>Rôles :</strong> <span id="selectedRoles">Aucun</span></p>
+                <button class="btn btn-modifier-info btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">Modifier les informations</button>
+            </div>
+        </div>
+
+         <!-- Modal pour modifier le profil -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Modifier les informations du profil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-profile-form">
+                        <div class="mb-3 text-center">
+                            <img id="profile-img" src="../Ressources/jane doe.jpg" alt="Photo de Profil" class="rounded-circle" style="width: 120px; height: 120px;">
+                            <p><a href="#" id="change-photo" class="text-decoration-none">Modifier la photo</a></p>
+                            <input type="file" id="photo-input" style="display:none;" accept="image/*">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" value="Jane Doe" required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="pseudo" class="form-label">Pseudo</label>
+                            <input type="text" class="form-control" id="pseudo" value="JaneD" required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" value="jane.doe@email.com" required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="motdepasse" class="form-label">Mot de passe</label>
+                            <input type="password" class="form-control" id="motdepasse" value="********" required>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="role" id="rolePassager" value="Passager">
+                            <label class="form-check-label" for="rolePassager">
+                                Passager
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="role" id="roleChauffeur" value="Chauffeur">
+                            <label class="form-check-label" for="roleChauffeur">
+                                Chauffeur
+                            </label>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<!-- Section "Véhicules" -->
+<div class="section-box">
+    <div class="section-header" onclick="toggleSection('vehicles')">
+        <span>Véhicules</span>
+    </div>
+    <div id="vehicles" class="section-content">
+        <ul class="list-group" id="vehicle-list">
+            <!-- Liste des véhicules ajoutés ici -->
+        </ul>
+        <button class="btn-modifier-info" data-bs-toggle="modal" data-bs-target="#addVehicleModal">Ajouter un véhicule</button>
+    </div>
+</div>
+
+<!-- Modal pour Ajouter un véhicule -->
+<div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addVehicleModalLabel">Ajouter un véhicule</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="addVehicleForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="vehicle-name" class="form-label">Marque du véhicule</label>
+                        <input type="text" class="form-control" id="vehicle-name" placeholder="Ex : Dacia" required>
+                        <label for="vehicle-model" class="form-label">Modèle</label>
+                        <input type="text" class="form-control" id="vehicle-model" placeholder="Ex : Sandero" required>
+                        <label for="vehicle-color" class="form-label">Couleur</label>
+                        <input type="text" class="form-control" id="vehicle-color" placeholder="Ex : Verte" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vehicle-type" class="form-label">Type de véhicule</label>
+                        <select class="form-select" id="vehicle-type" required>
+                            <option value="Électrique">Électrique</option>
+                            <option value="Thermique">Thermique</option>
+                            <option value="Hybride">Hybride</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vehicle-plate" class="form-label">Plaque d'immatriculation</label>
+                        <input type="text" class="form-control" id="vehicle-plate" placeholder="Ex : AB-123-CD" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    
+        <!-- Section Historique des Trajets -->
+        <div class="section-box">
+            <div class="section-header" onclick="toggleSection('history')">
+                <span>Historique</span>
+            </div>
+            <div id="history" class="section-content">
+                <p>Aucun trajet récent pour le moment.</p>
+            </div>
+        </div>
+    
     </div>
 
-    <!-- Sections -->
-    <div class="sections-container">
+  
 
-        <!-- Section Profil -->
-        <div class="section-box" data-bs-toggle="collapse" href="#profil-info">
-            <i class="fa fa-user"></i>
-            <h4>Profil</h4>
-        </div>
-        <div class="collapse" id="profil-info">
-            <div class="collapse-content">
-                <h5>Nom: Jane Doe</h5>
-                <p>Email: jane.doe@email.com</p>
-                <div class="role-selection">
-                    <input type="checkbox" id="passengerRole" name="role" value="passenger">
-                    <label for="passengerRole">Passager</label>
-                    <input type="checkbox" id="driverRole" name="role" value="driver">
-                    <label for="driverRole">Chauffeur</label>
-                </div>
-                <button class="btn btn-modifier-info">Enregistrer</button>
+
+<!-- Section "Démarrer un nouveau trajet" -->
+<div class="section-box">
+    <div class="section-header" onclick="toggleSection('start-trip')">
+        <span>Démarrer un nouveau trajet</span>
+    </div>
+    <div id="start-trip" class="section-content">
+        <form id="startTripForm">
+            <div class="mb-3">
+                <label for="depart-address" class="form-label">Adresse de départ</label>
+                <input type="text" class="form-control" id="depart-address" placeholder="Ex : Paris, Rue de Rivoli" required>
             </div>
-        </div>
-
-        <!-- Section Véhicules -->
-        <div class="section-box" data-bs-toggle="collapse" href="#vehicle-info">
-            <i class="fa fa-car"></i>
-            <h4>Véhicules</h4>
-        </div>
-        <div class="collapse" id="vehicle-info">
-            <div class="collapse-content">
-                <h5>Mes Véhicules :</h5>
-                <ul class="list-group">
-                    <li class="list-group-item vehicle-item">
-                        Toyota Prius - Verte <i class="fa fa-bolt"></i>
-                        <button class="delete-btn">&#10006;</button>
-                    </li>
-                    <li class="list-group-item vehicle-item">
-                        Peugeot 208 - Rouge
-                        <button class="delete-btn">&#10006;</button>
-                    </li>
-                </ul>
-                <button class="btn btn-profil">Ajouter un véhicule</button>
+            <div class="mb-3">
+                <label for="arrival-address" class="form-label">Adresse d'arrivée</label>
+                <input type="text" class="form-control" id="arrival-address" placeholder="Ex : Lyon, Place Bellecour" required>
             </div>
-        </div>
-
-        <!-- Section Historique -->
-        <div class="section-box" data-bs-toggle="collapse" href="#history-info">
-            <i class="fa fa-history"></i>
-            <h4>Historique</h4>
-        </div>
-        <div class="collapse" id="history-info">
-            <div class="collapse-content">
-                <ul class="history-list">
-                    <li>Paris → Lyon | 15/11/2024</li>
-                    <li>Marseille → Nice | 25/11/2024</li>
-                </ul>
+            <div class="mb-3">
+                <label for="price" class="form-label">Prix (en crédits)</label>
+                <input type="number" class="form-control" id="price" placeholder="Ex : 10" required>
             </div>
-        </div>
+            <div class="mb-3">
+                <label for="vehicle-select" class="form-label">Véhicule</label>
+                <select class="form-select" id="vehicle-select" required>
+                    <option value="" disabled selected>Choisissez un véhicule</option>
+                    <!-- Les véhicules seront ajoutés dynamiquement ici -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Démarrer le trajet</button>
+        </form>
+    </div>
+</div>
 
-        <!-- Section Démarrer un Covoiturage -->
-        <div class="section-box" data-bs-toggle="collapse" href="#start-trip-info">
-            <i class="fa fa-play-circle"></i>
-            <h4>Démarrer un Covoiturage</h4>
-        </div>
-        <div class="collapse" id="start-trip-info">
-            <div class="collapse-content">
-                <form id="startTripForm">
-                    <label for="startAddress">Adresse de départ</label>
-                    <input type="text" id="startAddress" placeholder="Ex: 10 Rue de Paris, Lyon" required>
-                    <label for="endAddress">Adresse d'arrivée</label>
-                    <input type="text" id="endAddress" placeholder="Ex: Gare Montparnasse, Paris" required>
-                    <label for="price">Prix (€)</label>
-                    <input type="number" id="price" placeholder="Ex: 50" required>
-                    <button type="submit">Publier</button>
-                </form>
+<!-- Modal de confirmation -->
+<div class="modal fade" id="tripConfirmationModal" tabindex="-1" aria-labelledby="tripConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tripConfirmationModalLabel">Confirmation du trajet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="tripConfirmationBody">
+                <!-- Contenu dynamique de confirmation -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">Confirmer le trajet</button>
             </div>
         </div>
     </div>
 </div>
+    
+   
+
+    
+    
