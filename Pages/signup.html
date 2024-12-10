@@ -146,10 +146,15 @@
         <input type="email" name="email" placeholder="Email" required>
       </div>
       <div class="input-group">
-        <input type="password" name="motdepasse" placeholder="Mot de passe" required>
+        <input type="password" name="motdepasse" placeholder="Mot de passe securisé" required
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+          title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial">
       </div>
+      
       <div class="input-group">
-        <input type="password" name="confirm-motdepasse" placeholder="Confirmer le Mot de passe" required>
+        <input type="password" name="confirm-motdepasse" placeholder="Confirmer le Mot de passe" required
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+          title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial">
       </div>
       <button type="submit" class="login-button">S'inscrire</button>
       <p class="login-link">Tu as déjà un compte? <a href="#" id="login-link">Connecte toi maintenant!</a></p>

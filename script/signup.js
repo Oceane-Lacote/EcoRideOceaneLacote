@@ -55,3 +55,15 @@
    `;
    formTitle.innerText = "Connecte toi !";
  });
+
+ // Récupérer les éléments nécessaires pour valider les mots de passe
+const passwordInput = document.querySelector('[name="motdepasse"]');
+const confirmPasswordInput = document.querySelector('[name="confirm-motdepasse"]');
+
+// Vérifier que les mots de passe correspondent avant la soumission
+document.getElementById('signup-form').addEventListener('submit', function(e) {
+  if (passwordInput.value !== confirmPasswordInput.value) {
+    e.preventDefault();
+    alert("Les mots de passe ne correspondent pas.");
+  }
+});

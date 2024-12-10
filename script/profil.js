@@ -1,3 +1,4 @@
+// Gestion du changement de photo de profil
 document.getElementById('change-photo').addEventListener('click', function() {
     document.getElementById('photo-input').click();
 });
@@ -13,6 +14,7 @@ document.getElementById('photo-input').addEventListener('change', function(event
     }
 });
 
+// Formulaire de mise à jour du profil
 document.getElementById('edit-profile-form').addEventListener('submit', function(event) {
     event.preventDefault(); // Empêche la soumission du formulaire
     console.log("Formulaire soumis");
@@ -30,11 +32,15 @@ document.getElementById('edit-profile-form').addEventListener('submit', function
     modal.hide();
 });
 
+// Fonction pour supprimer un véhicule
 function deleteVehicle(button) {
-    const listItem = button.closest('li'); // Récupérer le parent <li>
-    listItem.remove();
+    button.closest('li').remove();
 }
 
+// Fonction pour supprimer une préférence
+function deletePreference(button) {
+    button.closest('li').remove();
+}
 
 // Fonction pour afficher ou cacher une section
 function toggleSection(sectionId) {
@@ -75,34 +81,34 @@ document.getElementById('startTripForm').addEventListener('submit', function (ev
     confirmationModal.show();
 });
 
-// Supprimer un véhicule
-function deleteVehicle(button) {
-    const listItem = button.closest('li');
-    listItem.remove();
-    console.log("Véhicule supprimé.");
-}
-
 // Mettre à jour la liste des véhicules
 document.getElementById('addVehicleModal').addEventListener('submit', function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Empêche la soumission classique du formulaire
+
+    // Récupérer les informations du véhicule
     const vehicleName = document.getElementById('vehicle-name').value;
     const vehicleModel = document.getElementById('vehicle-model').value;
     const vehicleColor = document.getElementById('vehicle-color').value;
+    const vehiclePlace = document.getElementById('vehicle-place').value;
     const vehicleType = document.getElementById('vehicle-type').value;
     const vehiclePlate = document.getElementById('vehicle-plate').value;
+    const vehicleDate = document.getElementById('vehicle-date').value;
 
+    // Ajouter le véhicule à la liste
     const vehicleList = document.querySelector('.list-group');
     const newVehicle = document.createElement('li');
     newVehicle.classList.add('list-group-item', 'vehicle-item');
     newVehicle.innerHTML = `
-        ${vehicleName}, ${vehicleModel} <br> ${vehicleColor} <br> ${vehiclePlate} - ${vehicleType}
-        <button class="delete-btn" onclick="deleteVehicle(this)">&#10006;</button>
+        ${vehicleName}, ${vehicleModel} <br> ${vehicleColor}, ${vehiclePlace} <br> ${vehiclePlate} - ${vehicleDate} <br> ${vehicleType}
+        <button class="btn-danger">&#10006;</button>
     `;
     vehicleList.appendChild(newVehicle);
-    console.log(`Nouveau véhicule ajouté: ${vehicleName}, ${vehicleModel}, ${vehicleColor}, ${vehicleType}, ${vehiclePlate}`);
 
-    // Réinitialiser le formulaire
-    document.getElementById('addVehicleForm').reset();
+    console.log(`Nouveau véhicule ajouté: ${vehicleName}, ${vehicleModel}, ${vehicleColor}, ${vehicleType}, ${vehiclePlate}, ${vehicleDate}, ${vehiclePlace}`);
+
+    // Fermer la modale après l'ajout du véhicule
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addVehicleModal'));
+    modal.hide();
 });
 
 // Mise à jour dynamique du prix
@@ -112,6 +118,19 @@ document.getElementById('price').addEventListener('input', function () {
     document.getElementById('net-price-display').innerText = prixNet > 0 ? `${prixNet} crédits nets` : "Prix insuffisant";
 });
 
+// Délégation d'événements pour la suppression de véhicules
+document.querySelector('.list-group').addEventListener('click', function(event) {
+    // Vérifier si l'élément cliqué est un bouton de suppression (croix)
+    if (event.target && event.target.classList.contains('btn-danger')) {
+        // Trouver l'élément parent (le <li>) de la croix
+        const listItem = event.target.closest('li');
+        
+        // Supprimer cet élément de la liste
+        listItem.remove();
+    }
+});
+
+// Fonction pour afficher ou cacher une section
 function toggleSection(sectionId) {
     // Ferme toutes les autres sections
     const allSections = document.querySelectorAll('.section-content');
@@ -129,27 +148,6 @@ function toggleSection(sectionId) {
         targetSection.classList.add('open');
     }
 }
-
-// Bouton pour enregistrer les rôles sélectionnés
-document.getElementById('saveRolesBtn').addEventListener('click', () => {
-    // Récupérer les checkboxes dans la modale
-    const checkboxes = document.querySelectorAll('.role-selection .form-check-input');
-    const selectedRoles = Array.from(checkboxes)
-        .filter(box => box.checked) // Récupère uniquement les cases cochées
-        .map(box => box.value);    // Récupère les valeurs des cases cochées
-
-    // Mettre à jour l'affichage dans le profil
-    const rolesDisplay = document.getElementById('selectedRoles');
-    if (selectedRoles.length > 0) {
-        rolesDisplay.textContent = selectedRoles.join(', ');
-    } else {
-        rolesDisplay.textContent = 'Aucun';
-    }
-
-    // Fermer la modale (optionnel, si désiré)
-    const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
-    modal.hide();
-});
 
 // Fonction pour afficher la note en étoiles
 function displayStarRating(rating) {
