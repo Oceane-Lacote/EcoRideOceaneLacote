@@ -6,8 +6,8 @@ header("Access-Control-Allow-Origin: *"); // Permettre les requêtes cross-origi
 
 // Connexion à la base de données
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "administrateur";
+$password = "@dminEc0Rid3!";
 $dbname = "ecoride";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
