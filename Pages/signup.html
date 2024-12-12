@@ -1,110 +1,118 @@
 <style>
-  * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    .container {
-      display: flex;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-    }
+.container {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
 
-    .image-section {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .image {
-      max-width: 100%;
-      height: auto;
-      border-radius: 5%;
-    }
+.image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5%;
+}
 
-    .form-section {
-      flex: 1;
-      padding: 40px;
-      background-color: white;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%; /* Force both forms to fill available space */
+}
 
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
+.form-section {
+  padding: 40px;
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Make the forms take full width */
+}
 
-    .input-group {
-      margin-bottom: 20px;
-    }
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+.input-group {
+  margin-bottom: 20px;
+}
 
-    input:focus {
-      border-color: #fcb941;
-      outline: none;
-    }
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
 
-    .login-button {
-      width: 100%;
-      padding: 14px;
-      background-color: #fcb941;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
+input:focus {
+  border-color: #fcb941;
+  outline: none;
+}
 
-    .login-button:hover {
-      background-color: #be9038;
-    }
+.login-button {
+  width: 100%;
+  padding: 14px;
+  background-color: #fcb941;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .signup {
-      text-align: center;
-      margin-top: 15px;
-    }
+.login-button:hover {
+  background-color: #be9038;
+}
 
-    .signup a {
-      text-decoration: none;
-      color: #fcb941;
-    }
+.signup {
+  text-align: center;
+  margin-top: 15px;
+}
 
-    .signup a:hover {
-      text-decoration: underline;
-    }
+.signup a {
+  text-decoration: none;
+  color: #fcb941;
+}
 
-    .login-link {
-      text-align: center;
-      margin-top: 15px;
-    }
+.signup a:hover {
+  text-decoration: underline;
+}
 
-    .login-link a {
-      text-decoration: none;
-      color: #fcb941;
-    }
+.login-link {
+  text-align: center;
+  margin-top: 15px;
+}
 
-    .login-link a:hover {
-      text-decoration: underline;
-    }
+.login-link a {
+  text-decoration: none;
+  color: #fcb941;
+}
 
-    /* Ensuring the signup form is properly styled */
-    #signup-form {
-      display: none;
-    }
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+#signup-form {
+  display: none;
+}
+
 
 </style>
 
@@ -112,52 +120,51 @@
   <div class="image-section">
     <img src="../Ressources/connexion.png" alt="Illustration" class="image">
   </div>
-  <div class="form-section" id="form-section">
-    <!-- Default login form -->
-    <h1 id="form-title">Connecte toi ! </h1>
-    <form action="#" method="post" id="login-form">
-      <div class="input-group">
-        <input type="email" name="email" placeholder="Email" required>
-      </div>
-      <div class="input-group">
-        <input type="password" name="motdepasse" placeholder="Mot de passe" required>
-      </div>
-      <button type="submit" class="login-button">Se connecter</button>
-      <p class="signup">Tu n'as pas de compte? <a href="#" id="sign-up-link">Inscris-toi!</a></p>
-    </form>
-  </div>
-</div>
+  <div class="form-wrapper">
+    <!-- Formulaire de connexion visible au départ -->
+    <div class="form-section" id="form-section">
+      <h1 id="form-title">Connecte toi !</h1>
+      <form  action="../../BackEnd/src/auth.php" method="POST" id="login-form">
+        <div class="input-group">
+          <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+          <input type="password" name="motdepasse" placeholder="Mot de passe" required>
+        </div>
+        <button type="submit" class="login-button">Se connecter</button>
+        <p class="signup">Tu n'as pas de compte? <a href="#" id="sign-up-link">Inscris-toi!</a></p>
+      </form>
+    </div>
 
-<!-- Registration form (initially hidden) -->
-<div id="signup-form" style="display: none;">
-  <div class="form-section">
-    <h1>Rejoins le mouvement !</h1>
-    <form action="#" method="post">
-      <div class="input-group">
-        <input type="text" name="prenom" placeholder="Prénom" required>
-      </div>
-      <div class="input-group">
-        <input type="text" name="last-name" placeholder="Nom" required>
-      </div>
-      <div class="input-group">
-        <input type="text" name="pseudo" placeholder="Pseudo" required>
-      </div>
-      <div class="input-group">
-        <input type="email" name="email" placeholder="Email" required>
-      </div>
-      <div class="input-group">
-        <input type="password" name="motdepasse" placeholder="Mot de passe securisé" required
-          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-          title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial">
-      </div>
-      
-      <div class="input-group">
-        <input type="password" name="confirm-motdepasse" placeholder="Confirmer le Mot de passe" required
-          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-          title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial">
-      </div>
-      <button type="submit" class="login-button">S'inscrire</button>
-      <p class="login-link">Tu as déjà un compte? <a href="#" id="login-link">Connecte toi maintenant!</a></p>
-    </form>
+    <!-- Formulaire d'inscription caché par défaut -->
+    <div id="signup-form" class="form-section">
+      <h1>Rejoins le mouvement !</h1>
+      <form action="../../BackEnd/src/auth.php" method="post">
+        <div class="input-group">
+          <input type="text" name="prenom" placeholder="Prénom" required>
+        </div>
+        <div class="input-group">
+          <input type="text" name="nom" placeholder="Nom" required>
+        </div>
+        <div class="input-group">
+          <input type="text" name="pseudo" placeholder="Pseudo" required>
+        </div>
+        <div class="input-group">
+          <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+          <input type="password" name="motdepasse" placeholder="Mot de passe sécurisé" required
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial">
+        </div>
+        <div class="input-group">
+          <input type="password" name="confirm-motdepasse" placeholder="Confirmer le Mot de passe" required
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial">
+        </div>
+        <button type="submit" class="login-button">S'inscrire</button>
+        <p class="login-link">Tu as déjà un compte? <a href="#" id="login-link">Connecte toi maintenant!</a></p>
+      </form>
+    </div>
   </div>
 </div>
