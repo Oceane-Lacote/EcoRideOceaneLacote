@@ -124,12 +124,12 @@ input:focus {
     <!-- Formulaire de connexion visible au départ -->
     <div class="form-section" id="form-section">
       <h1 id="form-title">Connecte toi !</h1>
-      <form  action="../../BackEnd/src/auth.php" method="POST" id="login-form">
+      <form  action="../BackEnd/src/auth.php" method="POST" id="login-form">
         <div class="input-group">
-          <input type="email" name="email" placeholder="Email" required>
+          <input type="email" id="login-email" placeholder="Email" required>
         </div>
         <div class="input-group">
-          <input type="password" name="motdepasse" placeholder="Mot de passe" required>
+          <input type="password" id="login-motdepasse" placeholder="Mot de passe" required>
         </div>
         <button type="submit" class="login-button">Se connecter</button>
         <p class="signup">Tu n'as pas de compte? <a href="#" id="sign-up-link">Inscris-toi!</a></p>
@@ -139,26 +139,26 @@ input:focus {
     <!-- Formulaire d'inscription caché par défaut -->
     <div id="signup-form" class="form-section">
       <h1>Rejoins le mouvement !</h1>
-      <form action="../../BackEnd/src/auth.php" method="post">
+      <form action="../BackEnd/src/auth.php" method="post">
         <div class="input-group">
-          <input type="text" name="prenom" placeholder="Prénom" required>
+          <input type="text" id="prenom" placeholder="Prénom" required>
         </div>
         <div class="input-group">
-          <input type="text" name="nom" placeholder="Nom" required>
+          <input type="text" id="nom" placeholder="Nom" required>
         </div>
         <div class="input-group">
-          <input type="text" name="pseudo" placeholder="Pseudo" required>
+          <input type="text" id="pseudo" placeholder="Pseudo" required>
         </div>
         <div class="input-group">
-          <input type="email" name="email" placeholder="Email" required>
+          <input type="email" id="signin-email" placeholder="Email" required>
         </div>
           <div class="input-group">
-            <input type="password" name="motdepasse" placeholder="Mot de passe sécurisé" required
+            <input type="password" id="signin-motdepasse" placeholder="Mot de passe sécurisé" required
             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
             title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial">
         </div>
         <div class="input-group">
-          <input type="password" name="confirm-motdepasse" placeholder="Confirmer le Mot de passe" required
+          <input type="password" id="confirm-motdepasse" placeholder="Confirmer le Mot de passe" required
             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
             title="Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial">
         </div>

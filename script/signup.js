@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function() {
 // Fonction de validation du formulaire avant soumission
 document.getElementById('signup-form').addEventListener('submit', function(event) {
   // Récupérer les valeurs des champs
-  const motdepasse = document.querySelector('input[name="motdepasse"]');
-  const confirmMotdepasse = document.querySelector('input[name="confirm-motdepasse"]');
+  const signinMotdepasse = document.querySelector('input[id="signin-motdepasse"]');
+  const confirmMotdepasse = document.querySelector('input[id="confirm-motdepasse"]');
 
   // Afficher les éléments récupérés pour vérifier si le querySelector trouve les bons éléments
   console.log("Mot de passe élément : ", motdepasse); 

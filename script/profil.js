@@ -57,6 +57,7 @@ document.getElementById('edit-profile-form').addEventListener('submit', function
 
     // Récupérer les données du formulaire
     const nom = document.getElementById('nom').value;
+    const prénom = document.getElementById('prénom').value;
     const pseudo = document.getElementById('pseudo').value;
     const email = document.getElementById('email').value;
     const motdepasse = document.getElementById('motdepasse').value;
@@ -80,7 +81,8 @@ document.getElementById('edit-profile-form').addEventListener('submit', function
             console.log('Profil mis à jour avec succès');
 
             // Mettre à jour le frontend
-            document.getElementById('display-name').innerText = nom;
+            document.getElementById('display-lastname').innerText = nom;
+            document.getElementById('display-name').innerText = prénom;
             document.getElementById('display-pseudo').innerText = pseudo;
             document.getElementById('display-email').innerText = email;
 
