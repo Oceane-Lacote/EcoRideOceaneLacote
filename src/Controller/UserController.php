@@ -3,6 +3,7 @@ namespace App;
 
 use App\Database;
 use App\Security;
+use Symfony\Component\Routing\Attribute\Route;
 
 class UserController {
 
@@ -12,7 +13,7 @@ class UserController {
         $db = new Database();
         $this->pdo = $db->connect();
     }
-
+    #[Route('/signin', name: 'signin', methods: ['GET'])]
     public function login($email, $password) {
         // Sécuriser l'email
         $email = Security::sanitizeEmail($email);
