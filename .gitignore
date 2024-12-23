@@ -1,2 +1,15 @@
+<<<<<<< HEAD
 node_modules
 Documentation
+=======
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+>>>>>>> 697e58cf01c924ad5a9bc98b8de7aadc872e747c
