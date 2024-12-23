@@ -1,0 +1,436 @@
+<style>
+    .profile-header {
+        background-color: #D9D9D9;
+        color: black;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    
+    .profile-header img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid white;
+        margin-bottom: 10px;
+    }
+    
+    .profile-header h3 {
+        margin-bottom: 10px;
+    }
+    
+    .section-header  {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        padding: 20px 100px;
+        background-color: #267aa7;
+        color: white;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    
+    /* Style pour la note en étoiles */
+.star-rating {
+    font-size: 20px;
+    color: #ccc; /* Gris par défaut */
+}
+
+.star-rating .star {
+    margin-right: 5px;
+}
+
+.star-rating .filled {
+    color: gold; /* Couleur des étoiles remplies */
+}
+
+    .sections-container{
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    
+    .section-header:hover {
+        background-color: #e69500;
+    }
+    
+    .section-content {
+        display: none;
+        background-color: #D9D9D9;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+    
+    .section-content.open {
+        display: block;
+    }
+    
+    .btn-modifier-info {
+        background-color: #FCB941;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 5px;
+    }
+    
+    .btn-modifier-info:hover {
+        background-color: #e69500;
+    }
+    #vehicles {
+    margin-top: 20px; /* Espace entre le titre et le contenu de la section */
+}
+
+.list-group {
+    margin-top: 10px; /* Espace entre la liste et le bouton "Ajouter un véhicule" */
+    gap: 15px; /* Ajout d'un espacement entre les éléments */
+    display: flex;
+    flex-direction: column; /* Dispose les éléments verticalement */
+}
+
+.list-group-item {
+    position: relative; /* Assurez-vous que les éléments contenant les boutons ont une position relative */
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Espace entre les lignes de texte */
+    line-height: 1.5; /* Améliore la lisibilité en augmentant l'interligne */
+}
+
+.vehicle-icon {
+    margin-right: 10px; /* Ajoute un espace entre l'icône et le texte */
+}
+
+.btn-modifier-info {
+    margin-top: 15px; /* Espace au-dessus du bouton "Ajouter un véhicule" */
+    display: block;
+    width: 100%; /* Bouton centré et élargi */
+    text-align: center;
+}
+
+.btn-danger {
+    position: absolute;
+    top: 5px; /* Ajustez pour un espacement optimal */
+    right: 5px; /* Décalez la croix vers le coin supérieur droit */
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    color: #dc3545;
+    cursor: pointer;
+}
+
+/* Ajouter un effet au survol de la croix */
+.btn-danger:hover {
+    color: #a71d2a;
+}
+
+    .section-subheader {
+    font-size: 1.1em; /* Taille de texte légèrement plus petite que la section principale */
+    font-weight: bold;
+    margin-top: 20px; /* Espacement entre la section véhicules et la sous-section préférences */
+}
+
+.section-content ul {
+    list-style-type: none;
+    padding-left: 0;
+}    
+    
+    </style>
+    
+    <div class="container mt-5">
+        <!-- Section Profil -->
+        <div class="profile-header">
+            <img src="../Ressources/jane doe.jpg" alt="Photo de Profil">
+            <h3>JaneD</h3>
+            <div class="star-rating" id="star-rating">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+            </div>
+        </div>
+
+    <div class="sections-container">
+        <!-- Section Informations Personnelles -->
+        <div class="section-box">
+            <div class="section-header" onclick="toggleSection('personal-info')">
+                <span>Profil</span>
+            </div>
+            <div id="personal-info" class="section-content">
+                <p><strong>Nom:</strong> Doe</p>
+                <p><strong>Prénom:</strong> Jane </p>
+                <p><strong>Pseudo:</strong> JaneD</p>
+                <p><strong>Email:</strong> jane.doe@email.com</p>
+                <p><strong>Téléphone:</strong> 0606060606</p>
+                <p><strong>Rôles :</strong> <span id="selectedRoles">Aucun</span></p>
+                <button class="btn btn-modifier-info btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">Modifier les informations</button>
+            </div>
+        </div>
+
+         <!-- Modal pour modifier le profil -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Modifier les informations du profil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-profile-form" action="update_profile.php" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3 text-center">
+                            <img id="profile-img" src="../Ressources/jane doe.jpg" alt="Photo de Profil" class="rounded-circle" style="width: 120px; height: 120px;">
+                            <p><a href="#" id="change-photo" class="text-decoration-none">Modifier la photo</a></p>
+                            <input type="file" id="photo-input" name="photo" style="display:none;" accept="image/*">
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" name="nom" value="Doe" required>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="prenom" class="form-label">Prénom</label>
+                            <input type="text" class="form-control" id="prenom" name="prenom" value="Jane" required>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="pseudo" class="form-label">Pseudo</label>
+                            <input type="text" class="form-control" id="pseudo" name="pseudo" value="JaneD" required>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="jane.doe@email.com" required>
+                        </div>
+                    
+                        <div class="mb-3">
+                            <label for="motdepasse" class="form-label">Mot de passe</label>
+                            <input type="password" class="form-control" id="motdepasse" name="motdepasse" value="********" required>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="role[]" id="rolePassager" value="Passager">
+                            <label class="form-check-label" for="rolePassager">
+                                Passager
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="role[]" id="roleChauffeur" value="Chauffeur">
+                            <label class="form-check-label" for="roleChauffeur">
+                                Chauffeur
+                            </label>
+                        </div>
+                    
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                        </div>
+                    </form>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-box">
+        <!-- Section Véhicules -->
+        <div class="section-header" onclick="toggleSection('vehicles')">
+            <span>Véhicules</span>
+        </div>
+        <div id="vehicles" class="section-content">
+            <li class="list-group-item">Dacia, Sandero<br>Verte, 2 places<br>AB-123-CD, 2015-06-05<br>Hybride
+            <button class="btn-danger" data-bs-target="#deletevehicle(this)">&#10006;</button></li>
+            <!-- Liste des véhicules -->
+            <ul class="list-group" id="vehicle-list">
+                <!-- Liste des véhicules ajoutés ici -->
+            </ul>
+            <button class="btn-modifier-info" data-bs-toggle="modal" data-bs-target="#addVehicleModal">Ajouter un véhicule</button>
+    
+            <!-- Sous-section Préférences -->
+            <div class="section-subheader">
+                <span>Préférences</span>
+            </div>
+            <div id="preferences" class="section-content" style="display: block;">
+                <ul class="list-group" id="preferences-list">
+                    <!-- Liste des préférences ajoutées ici -->
+                    <li class="list-group-item">Non fumeur
+                    <button class="btn-danger" data-bs-target="#deletevehicle(this)">&#10006;</button></li>
+                    <li class="list-group-item">Animal
+                    <button class="btn-danger" data-bs-target="#deletevehicle(this)">&#10006;</button></li>
+                    <li class="list-group-item">Départ avant 10h
+                    <button class="btn-danger" data-bs-target="#deletevehicle(this)">&#10006;</button></li>
+                </ul>
+                <button class="btn-modifier-info" data-bs-toggle="modal" data-bs-target="#addpreferenceModal">Ajouter/Modifier les préférences</button>
+            </div>
+        </div>
+    </div>
+ 
+
+<!-- Modal pour Ajouter un véhicule -->
+<div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addVehicleModalLabel">Ajouter un véhicule</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="addVehicleForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="vehicle-name" class="form-label">Marque du véhicule</label>
+                        <input type="text" class="form-control" id="vehicle-name" placeholder="Ex : Dacia" required>
+                        <label for="vehicle-model" class="form-label">Modèle</label>
+                        <input type="text" class="form-control" id="vehicle-model" placeholder="Ex : Sandero" required>
+                        <label for="vehicle-color" class="form-label">Couleur</label>
+                        <input type="text" class="form-control" id="vehicle-color" placeholder="Ex : Verte" required>
+                        <label for="vehicle-place" class="form-label">Nombre de place</label>
+                        <input type="text" class="form-control" id="vehicle-place" placeholder="Ex : 3 places" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vehicle-type" class="form-label">Type de véhicule</label>
+                        <select class="form-select" id="vehicle-type" required>
+                            <option value="Électrique">Électrique</option>
+                            <option value="Thermique">Thermique</option>
+                            <option value="Hybride">Hybride</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vehicle-plate" class="form-label">Plaque d'immatriculation</label>
+                        <input type="text" class="form-control" id="vehicle-plate" placeholder="Ex : AB-123-CD" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="vehicle-date" class="form-label">Date de première immatriculation</label>
+                    <input type="date" class="form-control" id="vehicle-date" placeholder="Ex : 10/09/2022" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour Ajouter/Modifier les préférences -->
+<div class="modal fade" id="addpreferenceModal" tabindex="-1" aria-labelledby="addpreferenceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addpreferenceModalLabel">Ajouter/Modifier les préférences</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="addPreferenceForm">
+                <div class="modal-body">
+                    <!-- Dropdown pour Fumeur/Non fumeur -->
+                    <div class="mb-3">
+                        <label for="smoking-preference" class="form-label">Préférence Fumeur</label>
+                        <select class="form-select" id="smoking-preference">
+                            <option value="Non fumeur">Non fumeur</option>
+                            <option value="Fumeur">Fumeur</option>
+                        </select>
+                    </div>
+                    <!-- Dropdown pour Animal/Non animal -->
+                    <div class="mb-3">
+                        <label for="animal-preference" class="form-label">Préférence Animal</label>
+                        <select class="form-select" id="animal-preference">
+                            <option value="Pas d'animal">Pas d'animal</option>
+                            <option value="Animal">Animal</option>
+                        </select>
+                    </div>
+                    <!-- Champ texte pour ajouter une préférence personnalisée -->
+                    <div class="mb-3">
+                        <label for="custom-preference" class="form-label">Autre préférence</label>
+                        <input type="text" class="form-control" id="custom-preference" placeholder="Ex : Musique Classique">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Ajouter/Modifier</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    
+        <!-- Section Historique des Trajets -->
+        <div class="section-box">
+            <div class="section-header" onclick="toggleSection('history')">
+                <span>Historique</span>
+            </div>
+            <div id="history" class="section-content">
+                <p>Aucun trajet récent pour le moment.</p>
+            </div>
+        </div>
+    
+    </div>
+
+  
+
+
+<!-- Section "Démarrer un nouveau trajet" -->
+<div class="section-box">
+    <div class="section-header" onclick="toggleSection('start-trip')">
+        <span>Démarrer un nouveau trajet</span>
+    </div>
+    <div id="start-trip" class="section-content">
+        <form id="startTripForm">
+            <div class="mb-3">
+                <label for="depart-address" class="form-label">Adresse de départ</label>
+                <input type="text" class="form-control" id="depart-address" placeholder="Ex : Paris, Rue de Rivoli" required>
+            </div>
+            <div class="mb-3">
+                <label for="arrival-address" class="form-label">Adresse d'arrivée</label>
+                <input type="text" class="form-control" id="arrival-address" placeholder="Ex : Lyon, Place Bellecour" required>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Prix (en crédits)</label>
+                <input type="number" class="form-control" id="price" placeholder="Ex : 10" required>
+            </div>
+            <div class="mb-3">
+                <label for="vehicle-select" class="form-label">Véhicule</label>
+                <select class="form-select" id="vehicle-select" required>
+                    <option value="" disabled selected>Choisissez un véhicule</option>
+                    <!-- Les véhicules seront ajoutés dynamiquement ici -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Démarrer le trajet</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de confirmation -->
+<div class="modal fade" id="tripConfirmationModal" tabindex="-1" aria-labelledby="tripConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tripConfirmationModalLabel">Confirmation du trajet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="tripConfirmationBody">
+                <!-- Contenu dynamique de confirmation -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">Confirmer le trajet</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
+   
+
+    <script src="script/profil.js"></script>
+    

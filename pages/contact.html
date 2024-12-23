@@ -1,0 +1,134 @@
+<style>
+    h1 {
+        margin-top: 50px;
+        text-align: center; /* Centrer le titre */
+        color: #333;
+    }
+
+    .support-list {
+        list-style-type: none; /* Enlever les puces */
+        padding: 0; /* Enlever le padding par défaut */
+        margin: 0; /* Enlever la marge par défaut */
+        max-width: 600px; /* Largeur maximale de la liste */
+        margin: 0 auto; /* Centrer la liste */
+    }
+
+    .support-list li {
+        background-color: #fff; /* Fond blanc pour chaque élément */
+        padding: 15px; /* Padding interne */
+        margin: 10px 0; /* Marge entre les éléments */
+        border-radius: 5px; /* Coins arrondis */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre */
+        cursor: pointer; /* Changer le curseur au survol */
+        transition: background-color 0.3s; /* Animation de changement de couleur */
+    }
+
+    .support-list li:hover {
+        background-color: #f0f8ff; /* Changer la couleur au survol */
+    }
+
+    .support-content {
+        display: none; /* Cacher le contenu par défaut */
+        margin-top: 20px; /* Espace entre la liste et le contenu */
+        background-color: #fff; /* Fond blanc */
+        padding: 20px; /* Padding interne */
+        border-radius: 5px; /* Coins arrondis */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre */
+    }
+
+    .input-area {
+        width: 100%;
+        height: 100px;
+        border: 1px solid #ccc; /* Bordure */
+        border-radius: 5px;
+        margin-top: 10px;
+        padding: 10px;
+        resize: none; /* Empêche le redimensionnement */
+        font-size: 16px; /* Taille de police plus grande */
+        color: black; /* Couleur du texte */
+        background-color: #ffffff; /* Couleur de fond par défaut */
+    }
+
+    .upload-section {
+        margin-top: 10px; /* Espace entre les éléments */
+    }
+
+    .upload-label {
+        display: block; /* Affiche le label comme un bloc */
+        margin-top: 10px; /* Espace au-dessus du label */
+    }
+
+    .upload-input {
+        display: inline-block; /* Affiche l'input en ligne */
+        margin-top: 5px; /* Espace au-dessus de l'input */
+    }
+
+    .submit-button {
+        margin-top: 20px; /* Espace au-dessus du bouton */
+        padding: 10px 15px; /* Padding du bouton */
+        background-color: #fcb941; /* Couleur du bouton */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px; /* Taille de police pour le bouton */
+        transition: background-color 0.3s;
+    }
+
+    .submit-button:hover {
+        background-color: #fcb941; /* Couleur du bouton au hover */
+    }
+
+    .selected {
+color: white; /* Couleur du texte */
+background-color: #fcb941; /* Couleur de fond */
+padding: 2px 5px; /* Ajoute un peu de remplissage pour l'esthétique */
+border-radius: 5px; /* Coins arrondis */
+}
+</style>
+
+<h1>Aide - Support Utilisateur</h1>
+<ul class="support-list">
+<li onclick="showContent('reportUser')">Signaler un utilisateur</li>
+<li onclick="showContent('technicalSupport')">Support technique</li>
+<li onclick="showContent('account')">Compte</li>
+</ul>
+
+<div id="supportContent">
+<div id="reportUser" class="support-content">
+    <h2>Signaler un utilisateur</h2>
+    <p>Pour signaler un utilisateur, veuillez fournir des informations sur le comportement inapproprié et des captures d'écran si possible.</p>
+    <textarea class="input-area" id="reportDescription" placeholder="Décrivez le comportement inapproprié..."></textarea>
+    <div class="upload-section">
+        <label class="upload-label">Télécharger des pièces jointes (.jpeg, .png, .pdf) :</label>
+        <input type="file" class="upload-input" id="fileUpload" accept=".jpeg, .jpg, .png, .pdf">
+    </div>
+    <button class="submit-button" onclick="submitReport()">Soumettre le signalement</button>
+</div>
+
+<div id="technicalSupport" class="support-content">
+    <h2>Support technique</h2>
+    <p>Pour obtenir une assistance technique, veuillez décrire votre problème et les étapes que vous avez suivies.</p>
+    <textarea class="input-area" id="supportDescription" placeholder="Décrivez votre problème..."></textarea>
+    <button class="submit-button" onclick="submitTechnicalSupport()">Soumettre la demande</button>
+</div>
+
+<div id="account" class="support-content" style="display: none;">
+    <h2>Assistance Compte</h2>
+    <p>Si vous avez des questions concernant votre compte, veuillez sélectionner le type de problème que vous rencontrez ci-dessous :</p>
+    
+    <ul style="list-style-type: none; padding: 0; color: #FFFFFF;">
+        <li><a href="#" onclick="showDetails(event, 'loginIssues')">Problèmes de connexion</a></li>
+        <li><a href="#" onclick="showDetails(event, 'accountModification')">Modification des informations du compte</a></li>
+        <li><a href="#" onclick="showDetails(event, 'accountSuspension')">Suspension ou désactivation du compte</a></li>
+        <li><a href="#" onclick="showDetails(event, 'securityIssues')">Problèmes de sécurité (compte piraté, etc.)</a></li>
+    </ul>
+
+    <div id="accountDetails" style="display: none; margin-top: 20px;">
+        <p id="accountProblemDescription" style="color: #FFFFFF;"></p>
+        <button onclick="requestHelp()" class="post-button">Demander de l'aide</button>
+    </div>
+</div>
+
+
+<script src="script/contact.js"></script>

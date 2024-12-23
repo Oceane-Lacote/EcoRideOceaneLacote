@@ -1,0 +1,73 @@
+<style>
+    .section {
+    flex: 1; /* Les sections prennent un espace égal */
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Section gauche */
+.section-left {
+    margin-top: 20px;
+    background-color: #267AA7; /* Couleur de fond bleue */
+    color: white;
+    
+}
+
+.section-left h2 {
+    margin-bottom: 80px;
+}
+
+.section-left label {
+    display: block;
+    margin: 10px 0 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.section-left input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.section-left .btn {
+    background-color: #FCB941; /* Couleur du bouton */
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.section-left .btn:hover {
+    background-color: #e69500;
+}
+</style>
+
+
+<div class="container-covoit">
+    <!-- Section gauche -->
+    <div class="section section-left">
+        <h2>Vous recherchez un covoiturage</h2>
+        <div class="form-and-image">
+                <form action="resultat" method="GET">
+                    <input type="text" id="depart" name="depart" placeholder="Ville de départ" required>
+                    <input type="text" id="arrivee" name="arrivee" placeholder="Ville d'arrivée" required>
+                    <input type="date" id="date" name="date" required>
+                    <button type="submit" class="btn-search">Rechercher</button>
+            </form>
+            <div class="image-container">
+                <img src="../Ressources/rechercher.png" alt="Rechercher Covoiturage" class="form-image">
+            </div>
+        </div>
+    </div>
+
+    

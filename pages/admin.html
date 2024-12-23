@@ -1,0 +1,112 @@
+<div class="container mt-5">
+    <!-- Section Gestion des Comptes -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="section-title">Gestion des Comptes</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEmployeeModal">
+                    Créer un Compte Employé
+                </button>
+                <!-- Barre de recherche -->
+                <input type="text" id="search-bar" class="form-control w-50" placeholder="Rechercher un utilisateur/employé...">
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="accounts-table">
+                    <tr>
+                        <td>Carole Danvers</td>
+                        <td>carole.danvers@email.fr</td>
+                        <td>Employé</td>
+                        <td><span class="badge bg-success">Actif</span></td>
+                        <td>
+                            <button class="btn btn-danger suspend-btn">Suspendre</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Stan Marsh</td>
+                        <td>stan.marsh@email.fr</td>
+                        <td>Utilisateur</td>
+                        <td><span class="badge bg-danger">Suspendu</span></td>
+                        <td>
+                            <button class="btn btn-success reactivate-btn">Réactiver</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>john.doe@email.fr</td>
+                        <td>Employé</td>
+                        <td><span class="badge bg-success">Actif</span></td>
+                        <td>
+                            <button class="btn btn-danger suspend-btn">Suspendre</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section Graphiques -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="section-title">Statistiques</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Covoiturages par jour</h6>
+                    <canvas id="ridesChart"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <h6>Crédit gagné par jour</h6>
+                    <canvas id="earningsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Crédits -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="section-title">Total des Crédits</h5>
+            <p class="fs-4">
+                <strong id="total-credits">189,000 crédits</strong>
+                <small id="credits-date" class="text-muted"></small>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour créer un compte employé -->
+<div class="modal fade" id="createEmployeeModal" tabindex="-1" aria-labelledby="createEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createEmployeeModalLabel">Créer un Compte Employé</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="create-employee-form">
+                    <div class="mb-3">
+                        <label for="employee-name" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="employee-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="employee-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="employee-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="employee-password" class="form-label">Mot de passe</label>
+                        <input type="password" class="form-control" id="employee-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Créer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
