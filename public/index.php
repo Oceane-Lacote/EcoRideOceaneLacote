@@ -110,7 +110,7 @@ switch($_SERVER["REQUEST_URI"]){
                         echo "Une erreur est survenue lors de l'attribution du rôle.";
                     }
                 } else {
-                    echo "Une erreur est survenue. Veuillez réessayer.";
+                    echo "Une erreur est survenue lol. Veuillez réessayer.";
                 }
  } catch (PDOException $e) {
                 echo "Erreur SQL : " . $e->getMessage();  // Affiche l'erreur SQL exacte
@@ -122,49 +122,66 @@ switch($_SERVER["REQUEST_URI"]){
         break;
         
         
-    case "/login":
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            require "../auth.php";
+        case "/login":
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                require "../auth.php"; // Connexion à la BDD
+                
+                // Nettoyage des entrées utilisateur
+                $email = filter_input(INPUT_POST, "login-email", FILTER_VALIDATE_EMAIL);
+                $loginmotdepasse = $_POST["login-motdepasse"] ?? null;
         
-            // Récupérer et valider les champs
-            $email = filter_input(INPUT_POST, "login-email", FILTER_VALIDATE_EMAIL);
-            $loginmotdepasse = $_POST["login-motdepasse"] ?? null;
-        
-            // Vérifier les champs
-            if (!$email) {
-                die("Email invalide ou manquant.");
-            }
-            if (!$loginmotdepasse) {
-                die("Mot de passe manquant.");
-            }
-        
-            try {
-                // Requête pour récupérer l'utilisateur
-                $stmt = $PDO->prepare("SELECT utilisateur_id, motdepasse FROM utilisateur WHERE email = :email");
-                $stmt->execute([":email" => $email]);
-                $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-                if ($utilisateur) {
-                    echo password_hash("mdpCarole1!", PASSWORD_BCRYPT);
-        
-                    if (password_verify($loginmotdepasse, $utilisateur["motdepasse"])) {
-                        session_start();
-                        $_SESSION["utilisateur_id"] = $utilisateur["utilisateur_id"];
-                        $_SESSION["email"] = $email;
-                        header("Location: /profil");
-                        exit();
-                    } else {
-                        echo "Mot de passe incorrect.";
-                    }
-                } else {
-                    echo "Aucun utilisateur trouvé avec cet email.";
+                // Validation des champs
+                if (!$email) {
+                    die("Email invalide ou manquant.");
                 }
-            } catch (PDOException $e) {
-                die("Erreur PDO : " . $e->getMessage());
+                if (!$loginmotdepasse) {
+                    die("Mot de passe manquant.");
+                }
+        
+                try {
+                    // Requête pour récupérer les données utilisateur
+                    $stmt = $PDO->prepare("SELECT utilisateur_id, motdepasse, role_meta FROM utilisateur WHERE email = :email");
+                    $stmt->execute([":email" => $email]);
+                    $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+                    if ($utilisateur) {
+                        // Vérification du mot de passe
+                        if (password_verify($loginmotdepasse, $utilisateur["motdepasse"])) {
+                            session_start();
+                            $_SESSION["utilisateur_id"] = $utilisateur["utilisateur_id"];
+                            $_SESSION["email"] = $email;
+                            $_SESSION["role_meta"] = $utilisateur["role_meta"]; // Stocke le rôle dans la session
+        
+                            // Redirection en fonction du rôle
+                            switch ($utilisateur["role_meta"]) {
+                                case 'administrateur':
+                                    header('Location: /admin');
+                                    break;
+                                case 'employe':
+                                    header('Location: /employe');
+                                    break;
+                                case 'utilisateur':
+                                    header('Location: /profil');
+                                    break;
+                                default:
+                                    echo "Rôle inconnu.";
+                                    break;
+                            }
+                            exit();
+                        } else {
+                            echo "Mot de passe incorrect.";
+                        }
+                    } else {
+                        echo "Aucun utilisateur trouvé avec cet email.";
+                    }
+                } catch (PDOException $e) {
+                    die("Erreur PDO : " . $e->getMessage());
+                }
             }
-            }
-        require "../pages/signup.html";
-        break;
+        
+            require "../pages/signup.html";
+            break;
+        
     
     case "/recherche":
         require"../pages/recherche.html";
