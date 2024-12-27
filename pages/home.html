@@ -1,31 +1,29 @@
 <style>
-/* Conteneur principal */
 .container-covoit {
-    display: flex; /* Aligne les sections côte à côte */
-    justify-content: center; /* Centre les sections horizontalement */
-    align-items: center; /* Centre verticalement les sections */
-    gap: 0px; /* Espacement entre les sections */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 0px; 
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
     padding: 20px;
-    margin: 0 auto; /* Centre horizontalement sur la page */
+    margin: 0 auto;
 }
 .container-1 {
-    display: flex; /* Aligne les sections côte à côte */
-    justify-content: center; /* Centre les sections horizontalement */
-    align-items: center; /* Centre verticalement les sections */
-    gap: 0px; /* Espacement entre les sections */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 0px; 
     background-color: #a5d6a7;
     overflow: hidden;
     padding: 20px;
-    margin: 0 auto; /* Centre horizontalement sur la page */
+    margin: 0 auto; 
     margin-bottom: 20px;
 }
 
-/* Sections gauche et droite */
 .section {
-    flex: 1; /* Les sections prennent un espace égal */
+    flex: 1; 
     padding: 20px;
     text-align: center;
     display: flex;
@@ -34,9 +32,8 @@
     align-items: center;
 }
 
-/* Section gauche */
 .section-left {
-    background-color: #267AA7; /* Couleur de fond bleue */
+    background-color: #267AA7; 
     color: white;
     border-radius: 10px;
 }
@@ -58,7 +55,7 @@
 }
 
 .section-left .btn {
-    background-color: #FCB941; /* Couleur du bouton */
+    background-color: #FCB941; 
     border: none;
     padding: 10px 20px;
     color: white;
@@ -72,9 +69,9 @@
     background-color: #e69500;
 }
 
-/* Section droite */
+
 .section-right {
-    background-color: #7F6751; /* Couleur de fond marron */
+    background-color: #7F6751; 
     color: white;
     border-radius: 10px;
     text-align: center;
@@ -138,7 +135,6 @@
 <section>
     <article>
         <div class="container-covoit">
-            <!-- Section gauche -->
             <div class="section section-left">
                 <h2>Vous recherchez un covoiturage</h2>
                 <div class="form-and-image">
@@ -160,18 +156,17 @@
                 </div>
             </div>
             
-            <!-- Diviseur circulaire -->
+            
             <div class="divider-circle">
                 <span>ou</span>
             </div>
             
-            <!-- Section droite -->
             <div class="section section-right">
                 <h2>Vous proposez un covoiturage</h2>
                 <div class="image-container">
                     <img src="../Ressources/proposer.png" alt="Proposer Covoiturage" class="form-image">
                 </div>
-                <button class="btn style=">Proposer</button>
+                    <button class="btn style" href="/covoiturage">Proposer</button>
             </div>
         </div>
     </article>
@@ -192,7 +187,6 @@
                     </div>
                 </div>
                 <div class="col">
-                    <!-- Conteneur de l'image avec une bordure collée à l'image -->
                     <div class="image-container" style="border: 8px solid white; padding: 0; overflow: hidden;"> 
                         <img class="w-100 rounded" src="../Ressources/home-long.png" alt="Covoiturage Image"> 
                     </div>
@@ -202,17 +196,13 @@
     </article>
 
     <article>
-        <!-- Section avec fond bleu prenant toute la largeur de l'écran -->
         <div style="background-color: #267aa7; height: 30vh; width: 100%; padding: 0;">
-            <div class="container p-4" style="max-width: 1200px; margin: 0 auto;"> <!-- Limite la largeur de la section -->
-                <!-- Texte plus grand et justifié -->
+            <div class="container p-4" style="max-width: 1200px; margin: 0 auto;"> 
                 <p class="text-justify text-white" style="font-size: 1.5rem;">
                     Passez au covoiturage responsable dès maintenant et profitez de 20 crédits offerts pour votre premier trajet ! 🚗💚✨
                 </p>
                 <div class="text-center pt-5">
-                    <!-- Bouton avec fond FCB941 -->
-                    <a href="/signup">
-                        <button class="btn" style="background-color: #FCB941; color: white; font-size: 1.3rem;">S'inscrire</button>
+                        <button class="btn" href="/signup" style="background-color: #FCB941; color: white; font-size: 1.3rem;">S'inscrire</button>
                     </a>
                 </div>
             </div>

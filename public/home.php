@@ -10,7 +10,6 @@
     <title>Document</title>
 </head>
 <body>
-    
 <header>
   <nav class="navbar navbar-expand-lg" style="background-color: #A5D6A7;">
     <div class="container-fluid">
@@ -31,7 +30,7 @@
             <a class="nav-link" href="/profil">Profil</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/recherche">Covoiturage</a>
+            <a class="nav-link" href="/recherche">Rechercher</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/contact">Contact</a>
@@ -63,5 +62,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
