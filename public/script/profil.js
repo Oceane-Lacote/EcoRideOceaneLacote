@@ -164,3 +164,17 @@ function deleteVehicle(button) {
     })
     .catch(error => console.error('Erreur réseau:', error));
 }
+document.querySelectorAll('[data-bs-target="#confirmationModal"]').forEach(button => {
+    button.addEventListener('click', function () {
+        const vehiculeId = this.getAttribute('data-vehicule-id'); // Récupère l'ID du véhicule
+        document.getElementById('confirm-delete').setAttribute('data-vehicule-id', vehiculeId); // Associe au bouton
+    });
+});
+
+document.getElementById('confirm-delete').addEventListener('click', function () {
+    const vehiculeId = this.getAttribute('data-vehicule-id'); // Récupère l'ID du bouton
+    if (vehiculeId) {
+        // Redirection vers un script PHP pour supprimer
+        window.location.href = `supprimer_vehicule.php?vehicule_id=${vehiculeId}`;
+    }
+});

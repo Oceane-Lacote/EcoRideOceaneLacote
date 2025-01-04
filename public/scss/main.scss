@@ -39,12 +39,29 @@ p{
 }
 
 .error-message {
-    color: red;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    padding: 10px;
-    margin-bottom: 15px;
+    background-color: #f8d7da; /* Rouge clair pour signaler une erreur */
+    color: #721c24; /* Couleur du texte */
+    padding: 15px; /* Espacement interne */
+    border: 1px solid #f5c6cb; /* Bordure rouge clair */
+    border-radius: 5px; /* Coins arrondis */
+    font-weight: bold; /* Texte en gras */
+    text-align: center; /* Centrer le texte */
+    margin: 10px 0; /* Marges en haut et en bas */
+}
+
+.message-flash {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50; /* Vert de succès */
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
     border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    width: auto;
+    max-width: 80%;
     text-align: center;
-    font-size: 16px;
 }

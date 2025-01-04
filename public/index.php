@@ -40,21 +40,19 @@ switch($_SERVER["REQUEST_URI"]){
                         }
                     }
         
-                    // Hachage du mot de passe si fourni
                     $hashedPassword = null;
                     if (!empty($motdepasse)) {
                         $hashedPassword = password_hash($motdepasse, PASSWORD_DEFAULT);
                     }
         
-                    // Construire la requête de mise à jour
                     $query = "UPDATE utilisateur 
                               SET nom = :nom, prenom = :prenom, pseudo = :pseudo, email = :email, roles= :roles";
                     if ($hashedPassword) {
-                        $query .= ", motdepasse = :motdepasse"; // Ajouter le champ motdepasse si modifié
+                        $query .= ", motdepasse = :motdepasse"; 
                     }
                     $query .= " WHERE utilisateur_id = :id";
         
-                    // Préparer les paramètres
+                   
                     $params = [
                         ':nom' => $nom,
                         ':prenom' => $prenom,
@@ -68,12 +66,10 @@ switch($_SERVER["REQUEST_URI"]){
                         $params[':motdepasse'] = $hashedPassword;
                     }
         
-                    // Exécuter la requête
                     $stmt = $PDO->prepare($query);
                     $stmt->execute($params);
         
-                    // Rediriger après mise à jour
-                    header('Location: /profil?success=1');
+                    header('Location: /profil.php');
                     exit();
                 }
             } catch (PDOException $e) {
@@ -129,27 +125,8 @@ switch($_SERVER["REQUEST_URI"]){
                     ":email" => $email,
                     ":image_profil" => $image_profil
                 ]);
-    
-                if ($resultat) {
-                    $utilisateurId = $PDO->lastInsertId();
-                    $roleQuery = $PDO->prepare("SELECT utilisateur_id FROM utilisateur WHERE nom = 'utilisateur'");
-                    $roleQuery->execute();
-                    $role = $roleQuery->fetch();
-    
-                    if ($role) {
-                        var_dump($role); 
-                        $roleInsert = $PDO->prepare("INSERT INTO utilisateur (role_meta) VALUES (:role_meta)");
-                        $roleInsert->execute([
-                            ":role_meta" => $role['role_meta'],
-                        ]);
-                        echo "Inscription réussie !";
-                    } else {
-                        echo "Une erreur est survenue lors de l'attribution du rôle.";
-                    }
-                } else {
-                    echo "Une erreur est survenue. Veuillez réessayer.";
-                }
- } catch (PDOException $e) {
+            echo "Inscription réussie !";
+            } catch (PDOException $e) {
                 echo "Erreur SQL : " . $e->getMessage();  // Affiche l'erreur SQL exacte
                 error_log("Erreur PDO : " . $e->getMessage()); // Logue l'erreur dans les logs
                 die("Une erreur est survenue lors de l'attribution du rôle. Veuillez réessayer plus tard.");
@@ -210,7 +187,6 @@ switch($_SERVER["REQUEST_URI"]){
                     die("Erreur PDO : " . $e->getMessage());
                 }
             }
-        
             require "../pages/signup.html";
             break;
         
@@ -231,93 +207,100 @@ switch($_SERVER["REQUEST_URI"]){
 
         
 
-    case "/employe":
-        if (!isset($_SESSION['utilisateur_id'])) {
-            header('Location: /login'); 
-            exit();
-        }
-        
-        $utilisateur_id = $_SESSION['utilisateur_id'];
-        
-        require "../auth.php";
-        
-        try {
-            $stmt = $PDO->prepare("SELECT role_meta FROM utilisateur WHERE utilisateur_id = :id");
-            $stmt->execute([':id' => $utilisateur_id]);
-            $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-            if (!$utilisateur) {
-                die("Utilisateur introuvable.");
+        case "/employe":
+            if (!isset($_SESSION['utilisateur_id'])) {
+                header('Location: /login'); 
+                exit();
             }
         
-            if ($utilisateur['role_meta'] !== 'employe') {
-                die("Accès refusé. Vous n'avez pas les droits nécessaires.");
-            }
+            $utilisateur_id = $_SESSION['utilisateur_id'];
         
-            echo "Bienvenue sur la page réservée aux employés !";
-            
-        } catch (PDOException $e) {
-            die("Erreur de connexion à la base de données : " . $e->getMessage());
-        }
-
-            require"../pages/employe.html";
-    break;
-
-        case "/admin":
             require "../auth.php";
-            if (!isset($_SESSION['role_meta']) || $_SESSION['role_meta'] !== 'administrateur') {
-                die("Accès refusé.");
+        
+            // Le bloc try avec catch
+            try {
+                $stmt = $PDO->prepare("SELECT role_meta FROM utilisateur WHERE utilisateur_id = :id");
+                $stmt->execute([':id' => $utilisateur_id]);
+                $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+                if (!$utilisateur) {
+                    die("Utilisateur introuvable.");
+                }
+        
+                if ($utilisateur['role_meta'] !== 'employe') {
+                    die("Accès refusé. Vous n'avez pas les droits nécessaires.");
+                }
+        
+                // Si l'utilisateur est valide et a le bon rôle
+                require "../pages/employe.php";  // Chargement de la page employe.php
+            } catch (Exception $e) {
+                // Gestion des erreurs si une exception est lancée
+                echo "Erreur: " . $e->getMessage();
+                exit(); // Sortie du script en cas d'erreur
             }
-        
-            // Gestion de la création des employés
-            if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create_employe"])) {
-                $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
-                $password = $_POST["password"] ?? null;
-        
-                if (!$email || !$password) {
-                    die("Email ou mot de passe invalide.");
-                }
-        
-                // Hash du mot de passe avant insertion
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        
-                try {
-                    $stmt = $PDO->prepare("INSERT INTO utilisateur (email, motdepasse, role_meta, statut) VALUES (:email, :motdepasse, 'employe', 'actif')");
-                    $stmt->execute([
-                        ':email' => $email,
-                        ':motdepasse' => $hashedPassword,
-                    ]);
-        
-                    echo "Compte employé créé avec succès.";
-                } catch (PDOException $e) {
-                    die("Erreur lors de la création : " . $e->getMessage());
-                }
-            }
-        
-            // Gestion du changement de statut (actif ou suspendu)
-            if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["change_status"])) {
-                $userId = $_POST["user_id"] ?? null;
-                $newStatus = $_POST["new_status"] ?? null;
-        
-                if (!$userId || !in_array($newStatus, ['actif', 'suspendu'])) {
-                    die("Données invalides.");
-                }
-        
-                try {
-                    $stmt = $PDO->prepare("UPDATE utilisateur SET statut = :statut WHERE utilisateur_id = :id");
-                    $stmt->execute([
-                        ':statut' => $newStatus,
-                        ':id' => $userId,
-                    ]);
-        
-                    echo "Statut mis à jour avec succès.";
-                } catch (PDOException $e) {
-                    die("Erreur lors de la mise à jour : " . $e->getMessage());
-                }
-            }
-            require"../pages/admin.html";
             break;
-    }
+        
+
+            case "/admin":
+                require "../auth.php"; // Inclure l'authentification
+            
+                // Vérification des droits d'accès (administrateur uniquement)
+                if (!isset($_SESSION['role_meta']) || $_SESSION['role_meta'] !== 'administrateur') {
+                    die("Accès refusé.");
+                }
+            
+                // Charger la page admin
+                require "../pages/admin.php";
+            
+                // Gestion de la création des employés
+                if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create_employe"])) {
+                    $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
+                    $password = $_POST["password"] ?? null;
+            
+                    if (!$email || !$password) {
+                        die("Email ou mot de passe invalide.");
+                    }
+            
+                    // Hash du mot de passe avant insertion
+                    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            
+                    try {
+                        $stmt = $PDO->prepare("INSERT INTO utilisateur (email, motdepasse, role_meta, statut) VALUES (:email, :motdepasse, 'employe', 'actif')");
+                        $stmt->execute([
+                            ':email' => $email,
+                            ':motdepasse' => $hashedPassword,
+                        ]);
+            
+                        echo "Compte employé créé avec succès.";
+                    } catch (PDOException $e) {
+                        die("Erreur lors de la création : " . $e->getMessage());
+                    }
+                }
+            
+                // Gestion du changement de statut (actif ou suspendu)
+                if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["change_status"])) {
+                    $userId = $_POST["user_id"] ?? null;
+                    $newStatus = $_POST["new_status"] ?? null;
+            
+                    if (!$userId || !in_array($newStatus, ['actif', 'suspendu'])) {
+                        die("Données invalides.");
+                    }
+            
+                    try {
+                        $stmt = $PDO->prepare("UPDATE utilisateur SET statut = :statut WHERE utilisateur_id = :id");
+                        $stmt->execute([
+                            ':statut' => $newStatus,
+                            ':id' => $userId,
+                        ]);
+            
+                        echo "Statut mis à jour avec succès.";
+                    } catch (PDOException $e) {
+                        die("Erreur lors de la mise à jour : " . $e->getMessage());
+                    }
+                }
+            
+                break;
+ }            
 
 $content = ob_get_clean();
 

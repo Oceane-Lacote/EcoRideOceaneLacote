@@ -1,21 +1,25 @@
 <?php
 require "../auth.php"; 
 
-
 if (!isset($_SESSION['utilisateur_id'])) {
     exit('Utilisateur non connecté');
 }
 
 try {
+    // Récupérer l'image depuis la base de données
     $stmt = $PDO->prepare("SELECT image_profil FROM utilisateur WHERE utilisateur_id = :id");
     $stmt->execute([':id' => $_SESSION['utilisateur_id']]);
     $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($utilisateur && $utilisateur['image_profil']) {
-      
-        header('Content-Type: image/jpeg'); 
+        // Détecter le type MIME de l'image
+        $imageData = $utilisateur['image_profil'];
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->buffer($imageData);
 
-        echo $utilisateur['image_profil'];
+        // Définir l'en-tête de type MIME en fonction du type de l'image
+        header("Content-Type: $mimeType");
+        echo $imageData;
         exit();
     } else {
         exit('Image non trouvée');
