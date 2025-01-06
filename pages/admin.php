@@ -101,7 +101,6 @@ button:hover {
         </div>
     </div>
 
-    <!-- Section Crédits -->
     <div class="card">
         <div class="card-body">
             <h5 class="section-title">Total des Crédits</h5>
@@ -121,7 +120,7 @@ button:hover {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="create-employee-form" method="POST" action="process_create_employee.php">
+                <form id="create-employee-form" method="POST" action="pagesprocess_create_employee.php">
                     <div class="mb-3">
                         <label for="employee-name" class="form-label">Nom</label>
                         <input type="text" class="form-control" id="employee-name" name="employee_name" required>

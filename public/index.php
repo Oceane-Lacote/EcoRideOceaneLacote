@@ -1,4 +1,6 @@
 <?php 
+$request = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+
 session_start();
 ob_start();
 switch($_SERVER["REQUEST_URI"]){
@@ -88,9 +90,7 @@ switch($_SERVER["REQUEST_URI"]){
             $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_STRING);
             $motdepasse = filter_input(INPUT_POST, "signin-motdepasse", FILTER_DEFAULT); 
             $email = filter_input(INPUT_POST, "signin-email", FILTER_VALIDATE_EMAIL);
-    
-            $image_profil = 'default_profil.jpg';
-    
+        
             if (!$nom || !$prenom || !$pseudo || !$motdepasse || !$email) {
                 die("Veuillez remplir tous les champs correctement.");
             }
@@ -115,20 +115,20 @@ switch($_SERVER["REQUEST_URI"]){
                 }
     
                 $hashedPassword = password_hash($motdepasse, PASSWORD_DEFAULT);
+
     
-                $utilisateur = $PDO->prepare("INSERT INTO utilisateur (nom, prenom, pseudo, motdepasse, email, image_profil) VALUES (:nom, :prenom, :pseudo, :motdepasse, :email, :image_profil)");
+                $utilisateur = $PDO->prepare("INSERT INTO utilisateur (nom, prenom, pseudo, motdepasse, email) VALUES (:nom, :prenom, :pseudo, :motdepasse, :email)");
                 $resultat = $utilisateur->execute([
                     ":nom" => $nom,
                     ":prenom" => $prenom,
                     ":pseudo" => $pseudo,
                     ":motdepasse" => $hashedPassword,
                     ":email" => $email,
-                    ":image_profil" => $image_profil
                 ]);
             echo "Inscription réussie !";
             } catch (PDOException $e) {
-                echo "Erreur SQL : " . $e->getMessage();  // Affiche l'erreur SQL exacte
-                error_log("Erreur PDO : " . $e->getMessage()); // Logue l'erreur dans les logs
+                echo "Erreur SQL : " . $e->getMessage();
+                error_log("Erreur PDO : " . $e->getMessage()); 
                 die("Une erreur est survenue lors de l'attribution du rôle. Veuillez réessayer plus tard.");
             }
         }
@@ -194,20 +194,17 @@ switch($_SERVER["REQUEST_URI"]){
     case "/recherche":
         require"../pages/recherche.html";
         break;
+
+
     case "/covoiturage":
         require"../pages/covoiturage.html";
-        break;
-    case "/resultat":
-        require"../pages/resultat.html";
         break;
 
     case "/contact":
         require"../pages/contact.html";
         break;
 
-        
-
-        case "/employe":
+    case "/employe":
             if (!isset($_SESSION['utilisateur_id'])) {
                 header('Location: /login'); 
                 exit();
@@ -217,7 +214,6 @@ switch($_SERVER["REQUEST_URI"]){
         
             require "../auth.php";
         
-            // Le bloc try avec catch
             try {
                 $stmt = $PDO->prepare("SELECT role_meta FROM utilisateur WHERE utilisateur_id = :id");
                 $stmt->execute([':id' => $utilisateur_id]);
@@ -231,28 +227,27 @@ switch($_SERVER["REQUEST_URI"]){
                     die("Accès refusé. Vous n'avez pas les droits nécessaires.");
                 }
         
-                // Si l'utilisateur est valide et a le bon rôle
-                require "../pages/employe.php";  // Chargement de la page employe.php
+                require "../pages/employe.php";
+                require "../pages/process_avis.php"; 
             } catch (Exception $e) {
-                // Gestion des erreurs si une exception est lancée
+               
                 echo "Erreur: " . $e->getMessage();
-                exit(); // Sortie du script en cas d'erreur
+                exit(); 
             }
-            break;
+        break;
         
 
-            case "/admin":
-                require "../auth.php"; // Inclure l'authentification
+        case "/admin":
+                require "../auth.php"; 
             
-                // Vérification des droits d'accès (administrateur uniquement)
                 if (!isset($_SESSION['role_meta']) || $_SESSION['role_meta'] !== 'administrateur') {
                     die("Accès refusé.");
                 }
             
-                // Charger la page admin
                 require "../pages/admin.php";
+                require "../pages/process_create_employe.php";
+                require "../pages/process_statut.php";
             
-                // Gestion de la création des employés
                 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["create_employe"])) {
                     $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
                     $password = $_POST["password"] ?? null;
@@ -261,7 +256,6 @@ switch($_SERVER["REQUEST_URI"]){
                         die("Email ou mot de passe invalide.");
                     }
             
-                    // Hash du mot de passe avant insertion
                     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
             
                     try {
@@ -277,7 +271,6 @@ switch($_SERVER["REQUEST_URI"]){
                     }
                 }
             
-                // Gestion du changement de statut (actif ou suspendu)
                 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["change_status"])) {
                     $userId = $_POST["user_id"] ?? null;
                     $newStatus = $_POST["new_status"] ?? null;
@@ -299,7 +292,18 @@ switch($_SERVER["REQUEST_URI"]){
                     }
                 }
             
-                break;
+        break; 
+
+        case "/resultat":
+
+        $depart = $_GET['depart'];
+        $arrivee = $_GET['arrivee'];
+        $date = $_GET['date'];
+        require "../pages/resultat.php"; 
+
+        break;
+
+
  }            
 
 $content = ob_get_clean();

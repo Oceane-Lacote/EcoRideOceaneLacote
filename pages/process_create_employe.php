@@ -2,9 +2,9 @@
 require "../auth.php";  
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = htmlspecialchars(trim($_POST['employee_name']));
-    $email = filter_input(INPUT_POST, 'employee_email', FILTER_VALIDATE_EMAIL);
-    $password = $_POST['employee_password'];
+    $name = htmlspecialchars(trim($_POST['pseudo']));
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $password = $_POST['motdepasse'];
 
     if ($name && $email && $password) {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);

@@ -349,15 +349,23 @@ if (isset($_POST['ville_depart'], $_POST['date_depart'], $_POST['heure_depart'],
 
                     <div class="mb-3">
     <label for="vehicule" class="form-label">Sélectionner votre véhicule</label>
+    <?php if (isset($vehicules) && is_array($vehicules)): ?>
     <select class="form-select" id="vehicule" name="vehicule" required>
         <option value="">Sélectionner un véhicule</option>
-        <?php foreach ($vehicules as $vehicule): ?>
-    <option value="<?= htmlspecialchars($vehicule['vehicule_id']) ?>">
-        <?= htmlspecialchars($vehicule['marque'] . ' ' . $vehicule['modele']) ?>
-    </option>
-<?php endforeach; ?>
-
+        <?php foreach ($vehicules as $vehicule): 
+            
+                $vehicule_id = $vehicule['vehicule_id'] ?? '';
+                $marque_modele = ($vehicule['marque'] ?? '') . ' ' . ($vehicule['modele'] ?? '');
+            ?>
+            <option value="<?= htmlspecialchars($vehicule_id) ?>">
+                <?= htmlspecialchars($marque_modele) ?>
+            </option>
+        <?php endforeach; ?>
     </select>
+<?php else: ?>
+    <p>Aucun véhicule disponible.</p>
+<?php endif; ?>
+
 </div>
 
                     <!-- Sélectionner le prix -->

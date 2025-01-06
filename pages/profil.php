@@ -32,8 +32,17 @@ try {
     die("Erreur de base de données : " . $e->getMessage());
 }
 
+try {
+    $stmt = $PDO->prepare("SELECT date_depart, heure_depart, ville_depart, date_arrive, heure_arrive, ville_arrive FROM covoiturage WHERE id_conducteur= :id");
+    $stmt->execute([':id' => $_SESSION['utilisateur_id']]);
+    $trajet = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    // Gestion des erreurs de base de données
+    die("Erreur de base de données : " . $e->getMessage());
+}
+
 $stmt = $PDO->prepare("SELECT AVG(note) AS moyenne FROM avis WHERE utilisateur_id_recepteur = :id");
-$stmt->execute([':id' => $_SESSION['utilisateur_id']]);
+$stmt->execute(params: [':id' => $_SESSION['utilisateur_id']]);
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 $moyenne = ($result && $result['moyenne']) ? round($result['moyenne'], 2) : 0;
 
@@ -41,9 +50,8 @@ $stmt = $PDO->prepare("SELECT modele, couleur, marque, energie, vehicule_date, v
 $stmt->execute([':id' => $_SESSION['utilisateur_id']]);
 $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Requête pour récupérer la note de l'utilisateur actuel
-$query = $PDO->prepare("SELECT note FROM notes WHERE utilisateur_id_recepteur = :utilisateur_id LIMIT 1");
-$query->execute([':utilisateur_id' => $_SESSION['utilisateur_id']]);  // Utiliser $_SESSION['utilisateur_id']
+$query = $PDO->prepare("SELECT note FROM avis WHERE utilisateur_id_recepteur = :utilisateur_id LIMIT 1");
+$query->execute([':utilisateur_id' => $_SESSION['utilisateur_id']]);  
 $note = $query->fetchColumn();
 ?>
 
@@ -286,8 +294,19 @@ $note = $query->fetchColumn();
         <div class="col-md-4">
                 <div class="section-header" onclick="toggleSection('history')">Historique</div>
                 <div id="history" class="section-content">
-                    <p>Aucun trajet récent pour le moment.</p>
-                </div>
+    <?php if ($utilisateur): ?>
+        <li class="list-group-item">
+        <div>
+        <span><strong>Date et Heure de départ :</strong> <?= htmlspecialchars($trajet['date_depart']) . ' - ' . htmlspecialchars($trajet['heure_depart']) ?></span><br>
+        <span><strong>Ville de départ :</strong> <?= htmlspecialchars($trajet['ville_depart']) ?></span><br>
+        <span><strong>Date et Heure d'arrivée :</strong> <?= htmlspecialchars($trajet['date_arrive']) . ' - ' . htmlspecialchars($trajet['heure_arrive']) ?></span><br>
+        <span><strong>Ville d'arrivée :</strong> <?= htmlspecialchars($trajet['ville_arrive']) ?></span><br>
+
+</div>
+        <?php else: ?>
+        <p>Pas de trajet récent disponible.</p>
+    <?php endif; ?>
+</div>
             </div>
         </div>
         
