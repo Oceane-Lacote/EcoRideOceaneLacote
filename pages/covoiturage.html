@@ -1,0 +1,82 @@
+<style>
+    .section {
+    flex: 1; /* Les sections prennent un espace égal */
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.section-left {
+    margin-top: 20px;
+    background-color: #7F6751; 
+    color: white;
+    
+}
+
+
+.section-left h2 {
+    margin-bottom: 80px;
+}
+
+.section-left label {
+    display: block;
+    margin: 10px 0 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.section-left input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+}
+
+.section-left .btn {
+    background-color: #FCB941; 
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.section-left .btn:hover {
+    background-color: #e69500;
+}
+</style>
+
+
+<div class="container-covoit">
+    <div class="section section-left">
+        <h2>Vous proposez un covoiturage</h2>
+        <div class="form-and-image">
+                <form action="resultat" method="GET">
+                    <input type="text" id="depart" name="depart" placeholder="Ville de départ" required>
+                    <input type="text" id="h-depart" name="h-depart" placeholder="Heure de départ" required>
+                    <input type="text" id="arrivee" name="arrivee" placeholder="Ville d'arrivée" required>
+                    <input type="text" id="h-arrivee" name="h-arrivee" placeholder="Heure d'arrivée" required>
+                    <input type="date" id="date" name="date" required>
+                    <input type="int" id="pix" name="prix" placeholder="Prix" required>
+                    <button type="submit" class="btn-search">Proposer</button>
+            </form>
+            <div class="image-container">
+                <img src="../Ressources/proposer.png" alt="Rechercher Covoiturage" class="form-image">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btn style').addEventListener('click', () => {
+            window.location.href = "/check-connexion.php"; 
+        });
+    </script>
+
+<script src="script/covoiturage.js"></script>

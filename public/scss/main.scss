@@ -1,0 +1,67 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css");
+@import 'custom';
+
+html{
+    position:relative;
+    min-height: 100%;
+}
+
+main{
+    margin-bottom: 95px;
+}
+
+footer.footer {
+    padding: 15px;
+    position: absolute;
+    bottom: 0; 
+    width: 100%
+}
+
+p{
+    font-size: 25px;
+}
+
+ *{
+    position:relative;
+ }
+
+ .hero-scene-content{
+    height:300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ }
+
+
+.text-justify{
+    text-align: justify;
+}
+
+.error-message {
+    background-color: #f8d7da; /* Rouge clair pour signaler une erreur */
+    color: #721c24; /* Couleur du texte */
+    padding: 15px; /* Espacement interne */
+    border: 1px solid #f5c6cb; /* Bordure rouge clair */
+    border-radius: 5px; /* Coins arrondis */
+    font-weight: bold; /* Texte en gras */
+    text-align: center; /* Centrer le texte */
+    margin: 10px 0; /* Marges en haut et en bas */
+}
+
+.message-flash {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50; /* Vert de succès */
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    width: auto;
+    max-width: 80%;
+    text-align: center;
+}
