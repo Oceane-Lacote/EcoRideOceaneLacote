@@ -1,142 +1,151 @@
 <?php
-
 require "../auth.php";
 
-$ville_depart = isset($_GET['depart']) ? $_GET['depart'] : '';
-$ville_arrivee = isset($_GET['arrivee']) ? $_GET['arrivee'] : '';
-$date_depart = isset($_GET['date']) ? $_GET['date'] : '';
+if (isset($_GET['depart']) && isset($_GET['arrivee']) && isset($_GET['date'])) {
+    $ville_depart = htmlspecialchars($_GET['depart']); // Sécurise les entrées
+    $ville_arrive = htmlspecialchars($_GET['arrivee']);
+    $date_depart = htmlspecialchars($_GET['date']);
 
-try {
-    $query = "
-    SELECT c.*, u.pseudo, u.photo_profil, u.note 
-    FROM covoiturage c
-    JOIN utilisateur u ON c.id_conducteur = u.id_utilisateur
-    WHERE c.ville_depart LIKE :ville_depart 
-    AND c.ville_arrivee LIKE :ville_arrivee 
-    AND c.date_depart = :date_depart
-";    
-    $stmt = $pdo->prepare($query);
+    // Requête SQL
+    $sql = "SELECT ville_depart, ville_arrive, date_depart, heure_depart, prix, 
+                   id_conducteur AS conducteur, statut 
+            FROM covoiturage 
+            WHERE ville_depart = ? 
+              AND ville_arrive = ? 
+              AND date_depart = ? 
+              AND statut = 'prévu'";
 
-    $ville_depart = "%" . $ville_depart . "%";
-    $ville_arrivee = "%" . $ville_arrivee . "%";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$ville_depart, $ville_arrive, $date_depart]);
 
-    $stmt->bindParam(':ville_depart', $ville_depart);
-    $stmt->bindParam(':ville_arrivee', $ville_arrivee);
-    $stmt->bindParam(':date_depart', $date_depart);
+    $covoiturages = $stmt->fetchAll(PDO::FETCH_ASSOC); // Tous les trajets trouvés
+    ?>
+    
 
-    $stmt->execute();
+        <style>
+            /* Style général */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
 
-    $covoiturages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            h1 {
+                text-align: center;
+                margin-top: 20px;
+            }
 
-} catch (PDOException $e) {
-    echo "Erreur de connexion ou de requête : " . $e->getMessage();
-}
+            .container {
+                width: 80%;
+                margin: 20px auto;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+            }
 
-?>
+            .covoiturage-card {
+                background: white;
+                border-radius: 8px;
+                padding: 15px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
 
-<style>
-        /* Style de base */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+            .covoiturage-card .info h3 {
+                margin: 0;
+                font-size: 18px;
+                font-weight: bold;
+            }
 
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            grid-gap: 20px;
-        }
+            .covoiturage-card .info .trajet {
+                margin-top: 10px;
+            }
 
-        .covoiturage-card {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+            .covoiturage-card .info .price {
+                margin-top: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #27ae60;
+            }
 
-        .covoiturage-card img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+            .covoiturage-card button {
+                padding: 10px 15px;
+                background-color: #3498db;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s ease;
+            }
 
-        .covoiturage-card .info {
-            flex-grow: 1;
-        }
+            .covoiturage-card button:hover {
+                background-color: #2980b9;
+            }
 
-        .covoiturage-card .info h3 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
+            .no-results {
+                text-align: center;
+                margin-top: 50px;
+            }
 
-        .covoiturage-card .info .note {
-            color: #888;
-            font-size: 14px;
-        }
+            .no-results button {
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
 
-        .covoiturage-card .info .trajet {
-            margin-top: 10px;
-        }
+            .no-results button:hover {
+                background-color: #0056b3;
+            }
+        </style>
 
-        .covoiturage-card .info .price {
-            margin-top: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #27ae60;
-        }
 
-        .covoiturage-card button {
-            padding: 10px 15px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
+        <h1>Résultats pour <?= htmlspecialchars($ville_depart) ?> → <?= htmlspecialchars($ville_arrive) ?> le <?= htmlspecialchars($date_depart) ?></h1>
 
-        .covoiturage-card button:hover {
-            background-color: #2980b9;
-        }
-
-</style>
-
-<div class="container">
-        <?php if (count($covoiturages) > 0): ?>
-            <?php foreach ($covoiturages as $covoiturage): ?>
-                <div class="covoiturage-card">
-                    <img src="<?= htmlspecialchars($covoiturage['photo_profil']) ?>" alt="Photo de profil">
-                    
-                    <div class="info">
-                        <h3><?= htmlspecialchars($covoiturage['conducteur']) ?></h3>
-                        <div class="note">Note: <?= htmlspecialchars($covoiturage['note']) ?> / 5</div>
-                        
-                        <div class="trajet">
-                            <strong>Départ :</strong> <?= htmlspecialchars($covoiturage['ville_depart']) ?><br>
-                            <strong>Arrivée :</strong> <?= htmlspecialchars($covoiturage['ville_arrivee']) ?><br>
-                            <strong>Date de départ :</strong> <?= htmlspecialchars($covoiturage['date_depart']) ?><br>
+        <div class="container">
+            <?php if (count($covoiturages) > 0): ?>
+                <?php foreach ($covoiturages as $covoiturage): ?>
+                    <div class="covoiturage-card">
+                        <div class="info">
+                            <h3>Conducteur : <?= htmlspecialchars($covoiturage['conducteur']) ?></h3>
+                            
+                            <div class="trajet">
+                                <strong>Départ :</strong> <?= htmlspecialchars($covoiturage['ville_depart']) ?><br>
+                                <strong>Arrivée :</strong> <?= htmlspecialchars($covoiturage['ville_arrive']) ?><br>
+                                <strong>Date :</strong> <?= htmlspecialchars($covoiturage['date_depart']) ?><br>
+                                <strong>Heure :</strong> <?= htmlspecialchars($covoiturage['heure_depart']) ?>
+                            </div>
+                            
+                            <div class="price">
+                                Prix : <?= htmlspecialchars($covoiturage['prix']) ?> €
+                            </div>
                         </div>
-                        
-                        <div class="price">
-                            Prix : <?= htmlspecialchars($covoiturage['prix']) ?> €
-                        </div>
+
+                        <button>Réserver une place</button>
                     </div>
-
-                    <button>Réserver une place</button>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="no-results">
+                    <p>Aucun covoiturage trouvé pour votre recherche.</p>
+                    <a href="/recherche" style="text-decoration: none;">
+                        <button>Changer la recherche</button>
+                    </a>
                 </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Aucun covoiturage trouvé pour votre recherche.</p>
-        <?php endif; ?>
-    </div>
+            <?php endif; ?>
+        </div>
+        
+    </body>
+    </html>
+<?php
+} else {
+    echo "<h1>Erreur : paramètres manquants !</h1>";
+    echo "<p>Veuillez vérifier votre recherche.</p>";
+}
+?>
 

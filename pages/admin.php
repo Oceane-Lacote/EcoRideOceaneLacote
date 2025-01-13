@@ -70,7 +70,7 @@ button:hover {
                                     $buttonValue = 'reactiver';
                                 }
                                 ?>
-                                <form method="POST" action="process_statut.php">
+                                <form method="POST" action="/pages/process_statut.php">
                                     <input type="hidden" name="utilisateur_id" value="<?= htmlspecialchars($utilisateur['utilisateur_id']) ?>">
                                     <button type="submit" name="action" value="<?= $buttonValue ?>" class="btn <?= $buttonClass ?>">
                                         <?= $buttonLabel ?>
@@ -120,7 +120,7 @@ button:hover {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="create-employee-form" method="POST" action="pagesprocess_create_employee.php">
+                <form id="create-employee-form" method="POST" action="ECORIDE/pages/process_create_employee.php">
                     <div class="mb-3">
                         <label for="employee-name" class="form-label">Nom</label>
                         <input type="text" class="form-control" id="employee-name" name="employee_name" required>

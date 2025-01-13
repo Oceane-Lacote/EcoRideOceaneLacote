@@ -1,0 +1,18 @@
+# Utilise une image officielle PHP 8.2 avec Apache
+FROM php:8.2-apache
+
+# Copie tout le contenu de ton projet dans le dossier web d'Apache
+COPY . /var/www/html
+
+# Donne les bonnes permissions aux fichiers pour Apache
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
+
+# Active les extensions PHP nécessaires (ajoute les tiennes ici si besoin)
+RUN docker-php-ext-install pdo pdo_mysql
+
+# Expose le port 80 pour le serveur web
+EXPOSE 80
+
+# Commande pour démarrer le serveur Apache
+CMD ["apache2-foreground"]
