@@ -138,16 +138,15 @@
             <div class="section section-left">
                 <h2>Vous recherchez un covoiturage</h2>
                 <div class="form-and-image">
-                    <form>
+                    <form action="/resultat" method="GET">
                         <label for="depart">Départ *</label>
-                        <input type="text" id="depart" placeholder="Ville ou code postal">
+                        <input type="text" id="depart" name="depart" placeholder="Ville ou code postal">
                         
                         <label for="arrivee">Arrivée *</label>
-                        <input type="text" id="arrivee" placeholder="Ville ou code postal">
+                        <input type="text" id="arrivee" name="arrivee" placeholder="Ville ou code postal">
                         
                         <label for="date">Date</label>
-                        <input type="date" id="date" value="2025-03-23">
-                        
+                        <input type="date" id="date" name="date" value="2025-03-23">
                         <button type="submit" class="btn">Rechercher</button>
                     </form>
                     <div class="image-container">
