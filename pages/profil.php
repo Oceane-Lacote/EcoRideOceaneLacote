@@ -53,6 +53,16 @@ $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $query = $PDO->prepare("SELECT note FROM avis WHERE utilisateur_id_recepteur = :utilisateur_id LIMIT 1");
 $query->execute([':utilisateur_id' => $_SESSION['utilisateur_id']]);  
 $note = $query->fetchColumn();
+
+try {
+    $stmt = $PDO->prepare("SELECT total_credits FROM credits WHERE utilisateur_id = :id");
+    $stmt->execute([':id' => $_SESSION['utilisateur_id']]);
+    $credits = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $credits_utilisateur = ($credits && isset($credits['total_credits'])) ? $credits['total_credits'] : 0;
+} catch (PDOException $e) {
+    die("Erreur de base de données pour les crédits : " . $e->getMessage());
+}
 ?>
 
 
@@ -218,6 +228,33 @@ $note = $query->fetchColumn();
     #vehicles {
         margin-top: 20px;
     }
+
+    .credits-info {
+    background-color: #f9f9f9;
+    padding: 5px 10px;
+    border-radius: 8px;
+    max-width: 200px;
+}
+
+.credits-info h4 {
+    text-align: center; 
+    margin: 0;          
+    font-size: 18px;    
+}
+
+.credits-balance {
+    display: flex;            
+    justify-content: center;  
+    align-items: center;      
+}
+
+.credits-balance strong {
+    font-size: 30px;
+    color: #28a745;
+    text-align: center;       
+    margin: 0;                
+}
+    
 </style>
 
 <div class="container mt-5">
@@ -239,9 +276,17 @@ $note = $query->fetchColumn();
             }
             ?>
         </div>
+
+<div class="credits-info text-end">
+            <h4>Vos crédits</h4>
+            <p class="credits-balance">
+            <strong><?php echo htmlspecialchars($credits_utilisateur); ?></strong>
+            </p>
+        </div>
     </div>
 </div>
-
+</div>
+</div>
 
     <div class="row">
         <div class="col-md-4">

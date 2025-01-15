@@ -125,6 +125,12 @@ switch($_SERVER["REQUEST_URI"]){
                     ":motdepasse" => $hashedPassword,
                     ":email" => $email,
                 ]);
+                
+                $stmt_credits = $PDO->prepare("INSERT INTO credits (utilisateur_id, total_credits) VALUES (:utilisateur_id, 20)");
+                $stmt_credits->execute([':utilisateur_id' => $utilisateur_id]);
+    
+                $PDO->commit();
+
             echo "Inscription réussie !";
             } catch (PDOException $e) {
                 echo "Erreur SQL : " . $e->getMessage();

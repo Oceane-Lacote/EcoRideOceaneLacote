@@ -17,7 +17,6 @@ function toggleSection(sectionId) {
     }
 }
 
-// Gestion du changement de photo de profil
 document.getElementById('change-photo').addEventListener('click', function() {
     document.getElementById('photo-input').click();
 });
