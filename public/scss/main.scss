@@ -6,13 +6,14 @@ html{
     min-height: 100%;
 }
 
-main{
-    margin-bottom: 95px;
+.main{
+    margin-bottom: 10px;
+    flex-grow: 1;
 }
 
-footer.footer {
+footer {
     padding: 15px;
-    position: absolute;
+    position: fixed;
     bottom: 0; 
     width: 100%
 }

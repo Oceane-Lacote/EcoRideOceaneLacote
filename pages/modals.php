@@ -178,7 +178,7 @@ if (isset($_POST['ville_depart'], $_POST['date_depart'], $_POST['heure_depart'],
                 <?php endif; ?>
 
                 <!-- Formulaire d'ajout de véhicule -->
-                <form id="add_vehicle" method="POST">
+                <form action="/vehicule" id="add_vehicle" method="POST">
                     <div class="mb-3">
                         <label for="marque" class="form-label">Marque</label>
                         <input type="text" class="form-control" id="marque" name="marque" required>
@@ -222,13 +222,12 @@ if (isset($_POST['ville_depart'], $_POST['date_depart'], $_POST['heure_depart'],
 <div class="modal fade" id="editPersonalInfoModal" tabindex="-1" aria-labelledby="editPersonalInfoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form method="POST" enctype="multipart/form-data">
+            <form action ="/profil" method="POST" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editPersonalInfoModalLabel">Modifier les informations personnelles</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Section Informations personnelles -->
                     <h6>Profil :</h6>
                     <div class="mb-3">
                         <label for="nom" class="form-label">Nom</label>
@@ -247,8 +246,7 @@ if (isset($_POST['ville_depart'], $_POST['date_depart'], $_POST['heure_depart'],
                         <input type="email" class="form-control" id="email" name="email" value="<?php echo $utilisateur['email']; ?>" required>
                     </div>
                     <div class="mb-3">
-                        <label for="image_profil" class="form-label">Photo de Profil</label>
-                        <input type="file" class="form-control" id="image_profil" name="image_profil">
+                    <input type="file" name="image_profil" id="image_profil" class="form-control" accept="image/*">
                     </div>
                     <hr>
                     <!-- Section Préférences -->

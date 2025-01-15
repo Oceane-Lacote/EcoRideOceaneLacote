@@ -6,7 +6,6 @@ if (!isset($_SESSION['utilisateur_id'])) {
 }
 
 try {
-    // Récupérer l'image depuis la base de données
     $stmt = $PDO->prepare("SELECT image_profil FROM utilisateur WHERE utilisateur_id = :id");
     $stmt->execute([':id' => $_SESSION['utilisateur_id']]);
     $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -27,4 +26,5 @@ try {
 } catch (PDOException $e) {
     exit("Erreur : " . $e->getMessage());
 }
+
 ?>

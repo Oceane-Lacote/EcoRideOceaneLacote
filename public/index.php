@@ -71,15 +71,46 @@ switch($_SERVER["REQUEST_URI"]){
                     $stmt = $PDO->prepare($query);
                     $stmt->execute($params);
         
-                    header('Location: /profil.php');
                     exit();
                 }
             } catch (PDOException $e) {
                 die("Erreur de base de données : " . $e->getMessage());
             }
+
         
             require "../pages/profil.php";
     break;
+
+    case "/vehicule":
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $marque   = htmlspecialchars($_POST['marque']); 
+            $modele = htmlspecialchars($_POST['modele']);
+            $couleur = htmlspecialchars($_POST['couleur']);
+            $energie = filter_input(INPUT_POST, 'energie', FILTER_VALIDATE_EMAIL); 
+            $nb_place = htmlspecialchars($_POST['nb_place']);
+            $vehicule_date = htmlspecialchars($_POST['vehicule_date']); 
+            $vehicule_plate = htmlspecialchars($_POST['vehicule_plate']); 
+        }
+            $query = "UPDATE vehicule 
+            SET marque = :marque, modele = :modele, couleur = :couleur, energie = :energie, nb_place = :nb_place, vehicule_date = :vehicule_date, vehicule_plate = :vehicule_plate";
+            $query .= " WHERE utilisateur_id = :id";
+
+ 
+     $params = [
+      ':marque' => $marque,
+      ':modele' => $modele,
+      ':couleur' => $couleur,
+      ':energie' => $energie,
+      ':nb_place' => $nb_place,
+      ':vehicule_plate' => $vehicule_plate,
+      ':vehicule_date' => $vehicule_date,
+      ':id' => $_SESSION['utilisateur_id']
+     ];
+
+        require "../pages/profil.php";
+    break;
+
         
     case "/signup":
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -125,7 +156,7 @@ switch($_SERVER["REQUEST_URI"]){
                     ":motdepasse" => $hashedPassword,
                     ":email" => $email,
                 ]);
-                
+
                 $stmt_credits = $PDO->prepare("INSERT INTO credits (utilisateur_id, total_credits) VALUES (:utilisateur_id, 20)");
                 $stmt_credits->execute([':utilisateur_id' => $utilisateur_id]);
     
@@ -301,13 +332,16 @@ switch($_SERVER["REQUEST_URI"]){
         break; 
 
         case "/resultat":
-
+    if (isset($_GET['depart']) && isset($_GET['arrivee']) && isset($_GET['date'])) {
         $depart = $_GET['depart'];
         $arrivee = $_GET['arrivee'];
         $date = $_GET['date'];
-        require "../pages/resultat.php"; 
+        require "../Pages/resultat.php";
+    } else {
+        echo "Erreur : paramètres manquants ! Veuillez vérifier votre recherche.";
+    }
+    break;
 
-        break;
 
 
  }            

@@ -33,12 +33,29 @@ try {
 }
 
 try {
-    $stmt = $PDO->prepare("SELECT date_depart, heure_depart, ville_depart, date_arrive, heure_arrive, ville_arrive FROM covoiturage WHERE id_conducteur= :id");
+    $stmt = $PDO->prepare("SELECT date_depart, heure_depart, ville_depart, date_arrive, heure_arrive, ville_arrive, statut FROM covoiturage WHERE id_conducteur = :id");
     $stmt->execute([':id' => $_SESSION['utilisateur_id']]);
-    $trajet = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!$trajets) {
+        throw new Exception("Aucun trajet trouvé.");
+    }
+
+    $trajetsPasses = [];
+    $trajetsPrevus = [];
+
+    foreach ($trajets as $trajet) {
+        if ($trajet['statut'] == 'Terminé') {
+            $trajetsPasses[] = $trajet; 
+        } elseif ($trajet['statut'] == 'Prévu') {
+            $trajetsPrevus[] = $trajet; 
+        }
+    }
 } catch (PDOException $e) {
-    // Gestion des erreurs de base de données
     die("Erreur de base de données : " . $e->getMessage());
+} catch (Exception $e) {
+    die("Erreur : " . $e->getMessage());
 }
 
 $stmt = $PDO->prepare("SELECT AVG(note) AS moyenne FROM avis WHERE utilisateur_id_recepteur = :id");
@@ -63,11 +80,16 @@ try {
 } catch (PDOException $e) {
     die("Erreur de base de données pour les crédits : " . $e->getMessage());
 }
+
 ?>
 
 
 <style>
    
+   .electric-background {
+    background-color: #A5D6A7 !important;
+}
+
     .section-box {
         flex: 1 1 calc(30% - 20px);
         max-width: 30%;
@@ -254,7 +276,22 @@ try {
     text-align: center;       
     margin: 0;                
 }
-    
+.electric-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%; 
+    overflow: hidden; 
+    background-color: white; 
+}
+
+.electric-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
 </style>
 
 <div class="container mt-5">
@@ -311,7 +348,10 @@ try {
                     <ul class="list-group" id="vehicle-list">
                         <?php if (!empty($vehicules)): ?>
                             <?php foreach ($vehicules as $vehicule): ?>
-                                <li class="list-group-item">
+                                <?php 
+                                    $backgroundClass = ($vehicule['energie'] == 'electrique') ? 'electric-background' : '';
+                                ?>
+                                    <li class="list-group-item <?= $backgroundClass ?>">
                                     <div>
                                         <span><strong>Marque:</strong> <?= htmlspecialchars($vehicule['marque']) ?></span><br>
                                         <span><strong>Modèle:</strong> <?= htmlspecialchars($vehicule['modele']) ?></span><br>
@@ -324,36 +364,69 @@ try {
                         data-bs-target="#confirmationModal" 
                         data-vehicule-id="<?= isset($vehicule['vehicule_id']) ? htmlspecialchars($vehicule['vehicule_id']) : '' ?>">
                     &#10006;
-                </button>                                
+                </button> 
+                <?php if ($vehicule['energie'] == 'electrique'): ?>
+            <div class="electric-icon">
+                <img src="../Ressources/logo electrique.png" alt="Icone électrique" class="img-fluid">
+            </div>
+        <?php endif; ?>                               
             </li>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <li class="list-group-item">Aucun véhicule trouvé.</li>
                         <?php endif; ?>
                     </ul>
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addVehicleModal">Ajouter un véhicule</button>
+                    <button class="btn btn-modifier-info btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#addVehicleModal">Ajouter un véhicule</button>
                 </div>
             </div>
        
 
-        <div class="col-md-4">
-                <div class="section-header" onclick="toggleSection('history')">Historique</div>
-                <div id="history" class="section-content">
-    <?php if ($utilisateur): ?>
-        <li class="list-group-item">
-        <div>
-        <span><strong>Date et Heure de départ :</strong> <?= htmlspecialchars($trajet['date_depart']) . ' - ' . htmlspecialchars($trajet['heure_depart']) ?></span><br>
-        <span><strong>Ville de départ :</strong> <?= htmlspecialchars($trajet['ville_depart']) ?></span><br>
-        <span><strong>Date et Heure d'arrivée :</strong> <?= htmlspecialchars($trajet['date_arrive']) . ' - ' . htmlspecialchars($trajet['heure_arrive']) ?></span><br>
-        <span><strong>Ville d'arrivée :</strong> <?= htmlspecialchars($trajet['ville_arrive']) ?></span><br>
+            <div class="col-md-4">
+    <div class="section-header" onclick="toggleSection('history')">Historique</div>
+    <div id="history" class="section-content">
+        <?php if ($utilisateur): ?>
+            <!-- Section Passé : Covoiturages terminés -->
+            <h5>Covoiturages terminés</h5>
+            <?php if (count($trajetsPasses) > 0): ?>
+                <ul class="list-group">
+                    <?php foreach ($trajetsPasses as $trajet): ?>
+                        <li class="list-group-item">
+                            <div>
+                                <span><strong>Date et Heure de départ :</strong> <?= htmlspecialchars($trajet['date_depart']) . ' - ' . htmlspecialchars($trajet['heure_depart']) ?></span><br>
+                                <span><strong>Ville de départ :</strong> <?= htmlspecialchars($trajet['ville_depart']) ?></span><br>
+                                <span><strong>Date et Heure d'arrivée :</strong> <?= htmlspecialchars($trajet['date_arrive']) . ' - ' . htmlspecialchars($trajet['heure_arrive']) ?></span><br>
+                                <span><strong>Ville d'arrivée :</strong> <?= htmlspecialchars($trajet['ville_arrive']) ?></span><br>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>Aucun trajet terminé.</p>
+            <?php endif; ?>
 
-</div>
+            <h5>Covoiturages à venir</h5>
+            <?php if (count($trajetsPrevus) > 0): ?>
+                <ul class="list-group">
+                    <?php foreach ($trajetsPrevus as $trajet): ?>
+                        <li class="list-group-item">
+                            <div>
+                                <span><strong>Date et Heure de départ :</strong> <?= htmlspecialchars($trajet['date_depart']) . ' - ' . htmlspecialchars($trajet['heure_depart']) ?></span><br>
+                                <span><strong>Ville de départ :</strong> <?= htmlspecialchars($trajet['ville_depart']) ?></span><br>
+                                <span><strong>Date et Heure d'arrivée :</strong> <?= htmlspecialchars($trajet['date_arrive']) . ' - ' . htmlspecialchars($trajet['heure_arrive']) ?></span><br>
+                                <span><strong>Ville d'arrivée :</strong> <?= htmlspecialchars($trajet['ville_arrive']) ?></span><br>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>Aucun trajet prévu.</p>
+            <?php endif; ?>
         <?php else: ?>
-        <p>Pas de trajet récent disponible.</p>
-    <?php endif; ?>
+            <p>Veuillez vous connecter pour voir vos trajets.</p>
+        <?php endif; ?>
+    </div>
 </div>
-            </div>
-        </div>
+
         
     <div class="row">
         <div class="col-md-7">

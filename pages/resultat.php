@@ -2,23 +2,22 @@
 require "../auth.php";
 
 if (isset($_GET['depart']) && isset($_GET['arrivee']) && isset($_GET['date'])) {
-    $ville_depart = htmlspecialchars($_GET['depart']); // Sécurise les entrées
+    $ville_depart = htmlspecialchars($_GET['depart']); 
     $ville_arrive = htmlspecialchars($_GET['arrivee']);
     $date_depart = htmlspecialchars($_GET['date']);
 
-    // Requête SQL
     $sql = "SELECT ville_depart, ville_arrive, date_depart, heure_depart, prix, 
                    id_conducteur AS conducteur, statut 
             FROM covoiturage 
             WHERE ville_depart = ? 
               AND ville_arrive = ? 
-              AND date_depart = ? 
               AND statut = 'prévu'";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$ville_depart, $ville_arrive, $date_depart]);
+    $stmt->execute([$ville_depart, $ville_arrive]);
 
-    $covoiturages = $stmt->fetchAll(PDO::FETCH_ASSOC); // Tous les trajets trouvés
+    $covoiturages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    var_dump($covoiturages);
     ?>
     
 
